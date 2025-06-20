@@ -1,0 +1,300 @@
+/* Global Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    overflow-x: hidden;
+    transition: margin-left 0.4s ease-in-out; /* Smoother transition */
+}
+
+body.sidebar-open {
+    margin-left: 260px; /* Match sidebar width */
+}
+
+/* Sidebar Overlay (Backdrop) */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s;
+    z-index: 999; /* Below sidebar, above content */
+}
+
+.sidebar-open .sidebar-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Navbar Styles (Sidebar and Top Bar) */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    transition: width 0.4s ease-in-out, transform 0.4s ease-in-out; /* Smoother with transform */
+    transform: translateX(-100%); /* Start off-screen */
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar-open .sidebar {
+    width: 260px;
+    transform: translateX(0); /* Slide in */
+}
+
+.sidebar-header {
+    padding: 0 15px 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 10px;
+}
+
+.sidebar .close-btn {
+    font-size: 30px;
+    cursor: pointer;
+    color: #555;
+    background: none;
+    border: none;
+    padding: 5px;
+    transition: color 0.2s ease-in-out;
+}
+
+.sidebar .close-btn:hover {
+    color: #007bff;
+}
+
+.sidebar a {
+    padding: 12px 20px 12px 25px;
+    text-decoration: none;
+    font-size: 17px;
+    color: #444;
+    display: block;
+    transition: opacity 0.3s ease-in-out, background-color 0.2s ease-in-out;
+    border-left: 3px solid transparent;
+    opacity: 0; /* Fade in links */
+}
+
+.sidebar-open .sidebar a {
+    opacity: 1;
+    transition-delay: 0.1s; /* Slight delay for staggered effect */
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: #e6f0fa;
+    color: #007bff;
+    border-left: 3px solid #007bff;
+}
+
+/* Top Bar */
+.top-bar {
+    background-color: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    transition: margin-left 0.4s ease-in-out; /* Smoother transition */
+}
+
+.burger-menu {
+    font-size: 28px;
+    cursor: pointer;
+    color: #007bff;
+    margin-right: 20px;
+    transition: color 0.2s ease-in-out;
+}
+
+.burger-menu:hover {
+    color: #0056b3;
+}
+
+.top-bar-title {
+    font-size: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* User Status Badge in Top Bar */
+.user-status {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 20px;
+    border: 1px solid;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+.status-admin {
+    color: #198754;
+    border-color: #198754;
+    background-color: rgba(25, 135, 84, 0.1);
+}
+
+.status-user {
+    color: #0d6efd;
+    border-color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.user-status:hover {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 1);
+}
+
+/* Footer Styles */
+.footer {
+    padding: 30px 20px;
+    background-color: #333;
+    color: #ccc;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.footer a {
+    color: #00aaff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content and Page Header Styles */
+.main-content {
+    padding: 25px;
+    margin-top: 30px;
+    transition: margin-left 0.4s ease-in-out; /* Smoother transition */
+}
+
+.page-header {
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 28px;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    background-color: #fff;
+    color: #333;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* File Upload Styles */
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.file-select-btn {
+    padding: 8px 12px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.file-select-btn:hover {
+    background-color: #5a6268;
+}
+
+.file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+}
+
+.remove-file {
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 1rem;
+    padding-left: 10px;
+    transition: color 0.2s;
+}
+
+.remove-file:hover {
+    color: #5a6268;
+}
+
+/* SweetAlert2 Overrides */
+.swal2-container {
+    z-index: 1200 !important;
+}
+
+.swal2-backdrop {
+    z-index: 1190 !important;
+}

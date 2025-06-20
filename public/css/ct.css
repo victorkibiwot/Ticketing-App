@@ -1,0 +1,46 @@
+/* Create Ticket-Specific Styles */
+.main-content {
+    padding: 25px;
+    margin-top: 30px; /* Height of top-bar */
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0; /* Adjusted padding-top to 0 to avoid extra spacing */
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 75%;
+    min-width: 400px;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.create-ticket-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.create-ticket-button:hover {
+    background-color: #0056b3;
+}

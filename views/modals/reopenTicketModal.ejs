@@ -1,0 +1,28 @@
+<!-- Re-Open Reason Modal -->
+<div class="modal fade" id="reopenReasonModal" tabindex="-1" aria-labelledby="reopenReasonModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reopenReasonModalLabel">Re-Open Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="reopenTicketForm">
+          <div class="form-group">
+            <label for="reopenReason" class="form-label">Please provide a reason for re-opening this ticket:</label>
+            <textarea class="form-control" id="reopenReason" name="reason" rows="4" required></textarea>
+          </div>
+          <div class="file-upload-container">
+            <input type="file" id="reopenAttachmentsInput" name="attachments" multiple style="display: none;">
+            <button type="button" id="reopenCustomFileButton" class="file-select-btn">Choose Files</button>
+            <div id="reopenFileList" class="file-list"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Submit Reason</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

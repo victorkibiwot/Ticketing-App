@@ -1,0 +1,65 @@
+<!-- Ticket Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content text-center"><!-- Center all modal content -->
+      
+      <!-- Modal Header -->
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title" id="ticketModalLabel">Ticket Details</h5>
+        <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs justify-content-center custom-tabs" id="ticketModalTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">Ticket Details</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="assign-tab" data-bs-toggle="tab" data-bs-target="#assign" type="button" role="tab" aria-controls="assign" aria-selected="false">Assign Ticket</button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content mt-4" id="ticketModalTabsContent">
+
+          <!-- Ticket Details Tab -->
+          <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+            <div id="modalBodyContent" class="mt-3"></div>
+          </div>
+
+          <!-- Assign Ticket Tab -->
+          <div class="tab-pane fade" id="assign" role="tabpanel" aria-labelledby="assign-tab">
+            <form id="assignForm" class="mt-3" onsubmit="event.preventDefault(); confirmAssignment();">
+              <!-- Assignee Input -->
+              <div class="mb-3 col-md-6 mx-auto">
+                <label for="assigneeInput" class="form-label">Assignee Username</label>
+                <input type="text" class="form-control text-center" id="assigneeInput" placeholder="Enter username or name" required>
+                <div id="userSearchResults"></div>
+              </div>
+              <!-- Priority Dropdown -->
+              <div class="mb-3 col-md-6 mx-auto">
+                <label for="prioritySelect" class="form-label">Select Priority</label>
+                <select class="form-select text-center" id="prioritySelect" required>
+                  <option value="" disabled selected>Select priority</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+              <!-- Centered Confirm Button -->
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Confirm Assignment</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

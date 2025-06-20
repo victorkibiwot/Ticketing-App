@@ -1,0 +1,26 @@
+<!-- User Ticket Details Modal -->
+<div class="modal fade" id="userTicketModal" tabindex="-1" aria-labelledby="userTicketModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content text-center"> <!-- Added text-center -->
+
+            <!-- Modal Header -->
+            <div class="modal-header justify-content-center"> <!-- Center header like admin modal -->
+                <h5 class="modal-title" id="userTicketModalLabel">Ticket Details</h5>
+                <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Match admin close button position -->
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="userModalBodyContent" class="container mt-3"></div> <!-- Added mt-3 for consistent spacing like admin modal -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-danger" id="ticketActionBtn">Action</button>
+                <button type="button" class="btn btn-success" id="reopenTicketBtn" style="display: none;">Re-Open Ticket</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
