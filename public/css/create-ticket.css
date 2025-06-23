@@ -1,0 +1,213 @@
+/* Create Ticket-Specific Styles */
+:root {
+    --bg-body: #f9f9f9;
+    --text-color: #333;
+    --bg-top-bar: #ffffff;
+    --top-bar-title: #333;
+    --burger-menu: #007bff;
+    --bg-sidebar: #ffffff;
+    --sidebar-text: #444;
+    --sidebar-hover-bg: #e6f0fa;
+    --sidebar-hover-text: #007bff;
+    --bg-content: #ffffff;
+    --content-text: #555;
+    --content-title: #007bff;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+}
+
+html.dark-mode {
+    --bg-body: #1a1a1a;
+    --text-color: #e0e0e0;
+    --bg-top-bar: #2c2c2c;
+    --top-bar-title: #e0e0e0;
+    --burger-menu: #4da8ff;
+    --bg-sidebar: #2c2c2c;
+    --sidebar-text: #e0e0e0;
+    --sidebar-hover-bg: #3a3a3a;
+    --sidebar-hover-text: #4da8ff;
+    --bg-content: #2c2c2c;
+    --content-text: #bbb;
+    --content-title: #4da8ff;
+    --button-bg: #4da8ff;
+    --button-hover-bg: #2a7bff;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s, margin-left 0.4s ease-in-out;
+}
+
+body.sidebar-open {
+    margin-left: 260px;
+    transition: margin-left 0.4s ease-in-out;
+}
+
+.sidebar {
+    background-color: var(--bg-sidebar);
+    transition: width 0.4s ease-in-out, transform 0.4s ease-in-out;
+    transform: translateX(-100%);
+}
+
+.sidebar-open .sidebar {
+    width: 260px;
+    transform: translateX(0);
+}
+
+.sidebar .close-btn {
+    color: var(--burger-menu);
+    transition: color 0.3s;
+}
+
+.sidebar .close-btn:hover {
+    color: var(--sidebar-hover-text);
+}
+
+.sidebar a {
+    color: var(--sidebar-text);
+    transition: color 0.3s, background-color 0.3s, opacity 0.3s;
+    opacity: 0;
+}
+
+.sidebar-open .sidebar a {
+    opacity: 1;
+    transition-delay: 0.1s;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-hover-text);
+    border-left: 3px solid var(--sidebar-hover-text);
+}
+
+.top-bar {
+    background-color: var(--bg-top-bar);
+    color: var(--top-bar-title);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.top-bar-title {
+    color: var(--top-bar-title);
+    transition: color 0.3s;
+}
+
+.burger-menu {
+    color: var(--burger-menu);
+    transition: color 0.3s;
+}
+
+.burger-menu:hover {
+    color: var(--sidebar-hover-text);
+}
+
+.theme-toggle-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 12px;
+    cursor: pointer;
+    z-index: 100;
+    background-color: transparent;
+    font-size: 0.9rem;
+    border: 1px solid var(--content-text);
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.dark-mode .theme-toggle-btn {
+    color: var(--sidebar-hover-text);
+    border-color: var(--sidebar-hover-text);
+}
+
+.dark-mode .theme-toggle-btn .theme-icon.bi-moon {
+    color: #ffd700;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-hover-text);
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-container {
+    background-color: var(--bg-content);
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    width: 100%;
+    max-width: 75%;
+    min-width: 400px;
+    text-align: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    color: var(--content-title);
+    margin-bottom: 25px;
+    transition: color 0.3s;
+}
+
+.form-group label {
+    color: var(--content-text);
+    transition: color 0.3s;
+}
+
+.form-group input,
+.form-group textarea {
+    background-color: var(--bg-content);
+    color: var(--text-color);
+    border: 1px solid var(--content-text);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--content-title);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.file-select-btn {
+    background-color: var(--button-bg);
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.file-select-btn:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.file-item {
+    background-color: var(--bg-content);
+    color: var(--content-text);
+    border: 1px solid var(--content-text);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.create-ticket-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--button-bg);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.create-ticket-button:hover {
+    background-color: var(--button-hover-bg);
+}

@@ -11,8 +11,31 @@
     <link href="/css/global.css" rel="stylesheet">
     <link href="/css/login.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/inittheme.js"></script>
+    <script>
+        // Apply saved theme on page load
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.classList.add('dark-mode');
+            document.querySelector('.bi-sun').classList.add('d-none');
+            document.querySelector('.bi-moon').classList.remove('d-none');
+            document.querySelector('.theme-text').textContent = 'Toggle Light Mode';
+        }
+    </script>
 </head>
 <body>
+    <div class="toggle-container">
+    <!-- Theme Toggle Button -->
+    <div id="themeToggleBtn" class="theme-toggle-btn">
+        <i class="theme-icon bi bi-sun"></i>
+        <i class="theme-icon bi bi-moon d-none"></i>
+        <span class="theme-text">Toggle Dark Mode</span>
+    </div>
+    <script>initializeThemeToggleBtn();</script>
+    </div>
+
+
     <div class="login-box">
         <div class="form-section">
             <h2>

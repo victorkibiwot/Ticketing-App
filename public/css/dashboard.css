@@ -1,11 +1,49 @@
 /* Dashboard-Specific Styles */
-.main-content {
+/* .main-content {
     padding: 25px;
-    margin-top: 30px; /* Height of top-bar */
+    margin-top: 30px; 
+} */
+
+:root {
+    --bg-body: #f9f9f9;
+    --text-color: #333;
+    --bg-top-bar: #ffffff;
+    --top-bar-title: #333;
+    --burger-menu: #007bff;
+    --bg-sidebar: #ffffff;
+    --sidebar-text: #444;
+    --sidebar-hover-bg: #e6f0fa;
+    --sidebar-hover-text: #007bff;
+    --bg-content: #ffffff;
+    --content-text: #555;
+    --content-title: #007bff;
 }
 
+html.dark-mode {
+    --bg-body: #1a1a1a;
+    --text-color: #e0e0e0;
+    --bg-top-bar: #2c2c2c;
+    --top-bar-title: #e0e0e0;
+    --burger-menu: #4da8ff;
+    --bg-sidebar: #2c2c2c;
+    --sidebar-text: #e0e0e0;
+    --sidebar-hover-bg: #3a3a3a;
+    --sidebar-hover-text: #4da8ff;
+    --bg-content: #2c2c2c;
+    --content-text: #bbb;
+    --content-title: #4da8ff;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+
 .content-placeholder {
-    background-color: #ffffff;
+    background-color: var(--bg-content);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
@@ -13,17 +51,56 @@
 }
 
 .content-placeholder h3 {
-    color: #007bff;
-    margin-bottom: 10px;
+    color: var(--content-title);
 }
 
 .content-placeholder p {
-    line-height: 1.6;
-    color: #555;
+    color: var(--content-text);
 }
+
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
+
+
+/* Theme toggle btn */
+.theme-toggle-btn {
+    position:absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 12px;
+    cursor: pointer;
+    z-index: 100;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-size: 0.9rem;
+    border: 1px solid;
+    border-color: #6c757d;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+.dark-mode .theme-toggle-btn {
+    color: #4da8ff;
+    border-color: #4da8ff;
+}
+
+
+.dark-mode .theme-toggle-btn .theme-icon {
+    color: #ffd700;
+}
+
+.theme-toggle-btn:hover {
+    background-color: #778592;
+    color: #fff;
+}
+
+.dark-mode .theme-toggle-btn:hover {
+    background-color: #065aad;
+    color: #f8f9fa;
+}
+

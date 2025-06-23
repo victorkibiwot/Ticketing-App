@@ -12,6 +12,7 @@
  * @param {Object} headers - Additional headers (e.g., CSRF-Token)
  * @returns {Promise<void>}
  */
+
 async function submitForm({ form, url, method = 'POST', loadingTitle, successTitle, errorTitle, body, headers = {} }) {
     try {
         Swal.fire({

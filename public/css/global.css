@@ -10,11 +10,12 @@ body {
     background-color: #f0f2f5;
     color: #333;
     overflow-x: hidden;
-    transition: margin-left 0.4s ease-in-out; /* Smoother transition */
+    transition: margin-left 0.4s ease-in-out, background-color 0.3s, color 0.3s;
 }
-
+ 
 body.sidebar-open {
     margin-left: 260px; /* Match sidebar width */
+    transition: margin-left 0.4s ease-in-out;
 }
 
 /* Sidebar Overlay (Backdrop) */
@@ -45,7 +46,7 @@ body.sidebar-open {
     left: 0;
     background-color: #ffffff;
     overflow-x: hidden;
-    transition: width 0.4s ease-in-out, transform 0.4s ease-in-out; /* Smoother with transform */
+    transition: width 0.4s ease-in-out, transform 0.4s ease-in-out, background-color 0.3s;
     transform: translateX(-100%); /* Start off-screen */
     padding-top: 20px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -86,14 +87,14 @@ body.sidebar-open {
     font-size: 17px;
     color: #444;
     display: block;
-    transition: opacity 0.3s ease-in-out, background-color 0.2s ease-in-out;
+    transition: opacity 0.3s ease-in-out, background-color 0.2s ease-in-out, color 0.3s;
     border-left: 3px solid transparent;
     opacity: 0; /* Fade in links */
 }
 
 .sidebar-open .sidebar a {
     opacity: 1;
-    transition-delay: 0.1s; /* Slight delay for staggered effect */
+    transition: opacity 0.3s ease-in-out 0.1s, background-color 0.2s ease-in-out, color 0.3s;
 }
 
 .sidebar a:hover, .sidebar a.active {
@@ -187,7 +188,7 @@ body.sidebar-open {
 /* Main Content and Page Header Styles */
 .main-content {
     padding: 25px;
-    margin-top: 30px;
+    margin-top: 80px;
     transition: margin-left 0.4s ease-in-out; /* Smoother transition */
 }
 
@@ -197,10 +198,14 @@ body.sidebar-open {
 
 .page-title {
     font-size: 28px;
-    color: #333;
+    color: #333 !important;
     padding-bottom: 10px;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #007bff !important;
     margin-bottom: 20px;
+}
+
+.dark-mode .page-title {
+    color: #e0e0e0 !important;
 }
 
 /* Form Styles */
@@ -298,3 +303,108 @@ body.sidebar-open {
 .swal2-backdrop {
     z-index: 1190 !important;
 }
+
+/* SweetAlert2 Dark Mode Overrides */
+.dark-mode .swal2-popup {
+    background: #2c2c2c !important;
+    color: #f1f1f1 !important;
+}
+
+.dark-mode .swal2-title {
+    color: #f1f1f1 !important;
+}
+
+.dark-mode .swal2-html-container {
+    color: #dcdcdc !important;
+}
+
+.dark-mode .swal2-confirm {
+    background-color: #4e73df !important;
+    color: #fff !important;
+}
+
+.dark-mode .swal2-cancel {
+    background-color: #6c757d !important;
+    color: #fff !important;
+}
+
+
+/* Navbar and general styles */
+.top-bar {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--bg-top-bar);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.burger-menu {
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--burger-menu);
+    margin-right: 20px;
+}
+
+.top-bar-title {
+    font-size: 20px;
+    color: var(--top-bar-title);
+    font-weight: 600;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-sidebar);
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 0 15px 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar .close-btn {
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--burger-menu);
+    background: none;
+    border: none;
+}
+
+.sidebar a {
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    color: var(--sidebar-text);
+    display: block;
+    border-left: 3px solid transparent;
+    transition: 0.3s;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-hover-text);
+    border-left: 3px solid var(--sidebar-hover-text);
+}
+
+.page-title {
+    font-size: 28px;
+    color: var(--content-title);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--content-title);
+    margin-bottom: 20px;
+}
+

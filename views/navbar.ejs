@@ -15,7 +15,14 @@
 <div class="top-bar">
     <span class="burger-menu" onclick="openNav()">☰</span>
     <span class="top-bar-title">Postbank Ticketing Portal</span>
+    <div id="themeToggleBtn" class="theme-toggle-btn">
+        <i class="theme-icon bi bi-sun"></i>
+        <i class="theme-icon bi bi-moon d-none"></i>
+        <span class="theme-text">Toggle Dark Mode</span>
+    </div>
     <span class="user-status <%= role && role.includes('ADMIN') ? 'status-admin' : 'status-user' %>">
         <%= role && role.includes('ADMIN') ? 'ADMIN' : 'USER' %>
     </span>
 </div>
+
+<script>initializeThemeToggleBtn();</script>

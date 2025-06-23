@@ -1,0 +1,425 @@
+/* View Tickets-Specific Styles */
+:root {
+    --bg-body: #f9f9f9;
+    --text-color: #333;
+    --bg-top-bar: #ffffff;
+    --top-bar-title: #333;
+    --burger-menu: #007bff;
+    --bg-sidebar: #ffffff;
+    --sidebar-text: #444;
+    --sidebar-hover-bg: #e6f0fa;
+    --sidebar-hover-text: #007bff;
+    --bg-content: #ffffff;
+    --content-text: #555;
+    --content-title: #007bff;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+    --table-header-bg: #dbe9f6;
+    --table-border: #dee2e6;
+    --table-row-bg: #ffffff;
+    --table-row-hover-bg: #f1f3f5;
+    --table-row-alt-bg: #f8f9fa;
+    --status-open: #6c757d;
+    --status-in-progress: #0d6efd;
+    --status-resolved: #198754;
+    --status-closed: #dc3545;
+    --message-icon: #ffc107;
+    --custom-grey-btn-bg: #6c757d;
+    --custom-grey-btn-hover-bg: #5a6268;
+    --custom-grey-btn-border: #6c757d;
+    --custom-grey-btn-hover-border: #545b62;
+     --message-icon: #e0a800; /* Darker amber for light mode */
+    --message-icon-hover: #c69500; /* Even darker on hover */
+    --table-container-bg: #ececec; /* Light grey for light mode */
+}
+
+html.dark-mode {
+    --bg-body: #1a1a1a;
+    --text-color: #e0e0e0;
+    --bg-top-bar: #2c2c2c;
+    --top-bar-title: #e0e0e0;
+    --burger-menu: #4da8ff;
+    --bg-sidebar: #2c2c2c;
+    --sidebar-text: #e0e0e0;
+    --sidebar-hover-bg: #3a3a3a;
+    --sidebar-hover-text: #4da8ff;
+    --bg-content: #2c2c2c;
+    --content-text: #bbb;
+    --content-title: #4da8ff;
+    --button-bg: #4da8ff;
+    --button-hover-bg: #2a7bff;
+    --table-header-bg: #3a3a3a;
+    --table-border: #555;
+    --table-row-bg: #2c2c2c;
+    --table-row-hover-bg: #383838;
+    --table-row-alt-bg: #343434;
+    --status-open: #8a939b;
+    --status-in-progress: #0d6efd;
+    --status-resolved: #198754;
+    --status-closed: #dc3545;
+    --message-icon: #ffc107;
+    --message-icon: #ffc107; /* Keep current bright yellow in dark mode */
+    --message-icon-hover: #ffca2c; /* Slightly brighter on hover in dark mode */
+    --table-container-bg: #2c2c2c; /* Keep same as current dark background */
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.main-content {
+    padding: 25px;
+    margin-top: 80px;
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s, margin-left 0.4s ease-in-out;
+}
+
+.top-bar {
+    background-color: var(--bg-top-bar);
+    color: var(--top-bar-title);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.top-bar-title {
+    color: var(--top-bar-title);
+    transition: color 0.3s;
+}
+
+.burger-menu {
+    color: var(--burger-menu);
+    transition: color 0.3s;
+}
+
+.burger-menu:hover {
+    color: var(--sidebar-hover-text);
+}
+
+.theme-toggle-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 12px;
+    cursor: pointer;
+    z-index: 100;
+    background-color: transparent;
+    font-size: 0.9rem;
+    border: 1px solid var(--content-text);
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.dark-mode .theme-toggle-btn {
+    color: var(--sidebar-hover-text);
+    border-color: var(--sidebar-hover-text);
+}
+
+.dark-mode .theme-toggle-btn .theme-icon.bi-moon {
+    color: #ffd700;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-hover-text);
+}
+
+.table-responsive {
+    background-color: var(--table-container-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.table-bordered {
+    background-color: var(--bg-content);
+    color: var(--content-text);
+    border-color: var(--table-border);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.table-bordered th {
+    padding: 0.7rem 0.5rem;
+    font-weight: bold;
+    border-color: var(--table-border);
+    color: var(--content-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+/* .table-bordered th, */
+.table-bordered td {
+    border-color: var(--table-border);
+    padding: 0.5rem 0.5rem;
+    vertical-align: middle;
+    background-color: var(--table-row-bg);
+    color: var(--content-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.table-bordered th:not(.message-icon-cell):not(.status-indicator),
+.table-bordered td:not(.message-icon-cell):not(.status-indicator) {
+    text-align: center;
+}
+
+.table-bordered tbody tr:nth-child(even) td:not(.status-indicator):not(.message-icon-cell) {
+    background-color: var(--table-row-alt-bg);
+}
+
+.table-bordered tbody tr:hover td:not(.status-indicator):not(.message-icon-cell) {
+    background-color: var(--table-row-hover-bg);
+}
+
+.table-primary {
+    background-color: var(--table-header-bg);
+    color: var(--content-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.table-primary th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--content-text) !important;
+    transition: color 0.3s;
+}
+
+.text-muted {
+    color: var(--content-text) !important;
+    transition: color 0.3s;
+}
+
+.status-indicator {
+    width: 0.5px;
+    padding: 0 !important;
+    margin: 0;
+    border: none;
+}
+
+.dropdown-menu .status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+.dropdown-toggle {
+    margin-bottom: 10px;
+}
+
+.status-indicator.status-open {
+    background-color: var(--status-open);
+}
+
+.status-indicator.status-in-progress {
+    background-color: var(--status-in-progress);
+}
+
+.status-indicator.status-resolved {
+    background-color: var(--status-resolved);
+}
+
+.status-indicator.status-closed {
+    background-color: var(--status-closed);
+}
+
+.dropdown-menu {
+    background-color: var(--bg-content);
+    color: var(--content-text);
+    border-color: var(--table-border);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.dropdown-item {
+    color: var(--content-text);
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-hover-text);
+}
+
+.btn-secondary {
+    background-color: var(--button-bg);
+    border-color: var(--button-bg);
+    color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--button-hover-bg);
+}
+
+.custom-grey-btn {
+    background-color: var(--custom-grey-btn-bg);
+    border-color: var(--custom-grey-btn-border);
+    color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-grey-btn:hover {
+    background-color: var(--custom-grey-btn-hover-bg);
+    border-color: var(--custom-grey-btn-hover-border);
+    color: #fff;
+}
+
+/* Message icon stylings */
+.ticket-row {
+    position: relative;
+}
+
+.message-icon-cell {
+    position: relative;
+    padding: 0 !important;
+    width: 40px;
+}
+
+.message-icon-wrapper {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.ticket-row:hover .message-icon-wrapper {
+    display: inline-block;
+}
+
+
+.message-icon {
+    font-size: 1.5rem;
+    color: var(--message-icon);
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s ease, color 0.3s;
+}
+
+.message-icon:hover {
+    opacity: 1;
+    color: var(--message-icon-hover);
+}
+
+.ticket-detail-row {
+    border-bottom: 1px solid var(--table-border);
+    padding: 10px 0;
+    text-align: center;
+    color: var(--content-text);
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.ticket-detail-row strong {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    margin-right: 10px;
+    color: var(--content-text);
+    transition: color 0.3s;
+}
+
+.modal-content {
+    background-color: var(--bg-content);
+    color: var(--content-text);
+    border-color: var(--table-border);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.modal-header,
+.modal-footer {
+    background-color: var(--bg-content);
+    border-color: var(--table-border);
+    color: var(--content-text);
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.modal-title {
+    color: var(--content-text);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.custom-tabs .nav-link {
+    color: var(--content-text);
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.custom-tabs .nav-link.active {
+    background-color: transparent !important;
+    color: var(--content-title);
+    font-weight: bold;
+    border-bottom: 2px solid var(--table-border);
+    border-color: var(--table-border) !important; /* Ensure all borders match */
+}
+
+html.dark-mode .custom-tabs .nav-link.active {
+    border-bottom: 2px solid #666 !important; /* Optional: lighter border for dark mode */
+    border-color: #666 !important; /* Match all sides in dark mode */
+}
+
+/* Light mode: keep as is or adjust if you like */
+.custom-tabs {
+    border-bottom: 1px solid var(--table-border);
+}
+
+/* Dark mode: make it lighter than other borders */
+html.dark-mode .custom-tabs {
+    border-bottom: 1px solid #555; /* Or use a softer shade like #444 or even #666 depending on what looks best */
+}
+
+
+.disabled-tab {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#noTicketsMessage {
+    color: var(--content-text);
+    transition: color 0.3s;
+}
+
+#userTicketModal .modal-footer {
+    justify-content: center !important;
+    gap: 10px;
+}
+
+#userTicketModal .modal-footer button {
+    min-width: 120px;
+}
+
+#reopenReasonModal {
+    z-index: 1070;
+}
+
+#reopenReasonModal + .modal-backdrop {
+    z-index: 1065;
+}
+
+.modal-blur {
+    filter: blur(2px);
+    opacity: 0.8;
+}
+
+.modal-blur .modal-content {
+    filter: blur(1px);
+    opacity: 0.9;
+}
+
+#reopenReasonModal label {
+    color: var(--content-text);
+    transition: color 0.3s;
+}
+
+html.dark-mode .btn-close {
+    filter: invert(1);
+    opacity: 0.8; /* Optional: Make it a bit softer if full white is too harsh */
+}
+html.dark-mode .btn-close:hover {
+    opacity: 1; /* Fully visible on hover */
+}

@@ -93,8 +93,9 @@ router.get('/tickets', async (req, res) => {
   const username = req.session.usermame;
 
   if (!token || !jsessionid) {
-    // return res.json({ success: false, message: 'Session expired. Please login again.', redirect: '/' });
-    return res.redirect('/?error=Session expired. Please login again!');
+    req.flash('error', 'Please log in to view the tickets!');
+    return res.redirect('/');
+    // return res.redirect('/?error=Session expired. Please login again!');
   }
 
   try {

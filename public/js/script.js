@@ -126,30 +126,58 @@ if (logoutLink) {
 }
 
 /**
-   * Toggle between light and dark themes
-   */
-  function toggleTheme() {
-      const html = document.documentElement;
-      const isDark = html.classList.toggle('dark-mode');
-      const sunIcon = document.querySelector('.theme-icon.bi-sun');
-      const moonIcon = document.querySelector('.theme-icon.bi-moon');
-      const themeText = document.querySelector('.theme-text');
+ * Toggle between light and dark themes
+ */
+function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.classList.toggle('dark-mode');
+    const sunIcon = document.querySelector('.theme-icon.bi-sun');
+    const moonIcon = document.querySelector('.theme-icon.bi-moon');
+    const themeText = document.querySelector('.theme-text');
 
-      // Update icons and text
-      if (sunIcon && moonIcon && themeText) {
-          sunIcon.classList.toggle('d-none', isDark);
-          moonIcon.classList.toggle('d-none', !isDark);
-          themeText.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
-      }
+    // Update icons and text
+    if (sunIcon && moonIcon && themeText) {
+        sunIcon.classList.toggle('d-none', isDark);
+        moonIcon.classList.toggle('d-none', !isDark);
+        themeText.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    }
 
-      // Save theme preference
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }
+    // Save theme preference
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
 
-  // Initialize theme toggle button
-  document.addEventListener('DOMContentLoaded', () => {
-      const themeToggleBtn = document.getElementById('themeToggleBtn');
-      if (themeToggleBtn) {
-          themeToggleBtn.addEventListener('click', toggleTheme);
-      }
-  });
+// Initialize theme toggle button immediately
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', toggleTheme);
+}
+
+/**
+ * Get saved theme from localStorage or system preference
+ * @returns {string} 'dark' or 'light'
+ */
+function getCurrentTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return savedTheme || (prefersDark ? 'dark' : 'light');
+}
+
+function initializeThemeToggleBtn() {
+    const html = document.documentElement;
+    const isDark = html.classList.contains('dark-mode');
+    const sunIcon = document.querySelector('.theme-icon.bi-sun');
+    const moonIcon = document.querySelector('.theme-icon.bi-moon');
+    const themeText = document.querySelector('.theme-text');
+
+    if (sunIcon && moonIcon && themeText) {
+        sunIcon.classList.toggle('d-none', isDark);
+        moonIcon.classList.toggle('d-none', !isDark);
+        themeText.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    }
+}
+
+
+// initializeThemeToggleBtn();
+
+
+
