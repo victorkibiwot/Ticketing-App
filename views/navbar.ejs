@@ -15,11 +15,17 @@
 <div class="top-bar">
     <span class="burger-menu" onclick="openNav()">☰</span>
     <span class="top-bar-title">Postbank Ticketing Portal</span>
-    <div id="themeToggleBtn" class="theme-toggle-btn">
-        <i class="theme-icon bi bi-sun"></i>
-        <i class="theme-icon bi bi-moon d-none"></i>
-        <span class="theme-text">Toggle Dark Mode</span>
+    <div id="themeToggleBtn" class="theme-toggle-container">
+        <label class="theme-toggle-label">
+            <script>
+                const isDarkInitial = document.documentElement.getAttribute('data-theme-initial') === 'dark';
+                console.log(isDarkInitial);
+                document.write(`<input type="checkbox" id="themeToggleInput" class="theme-toggle-input" ${isDarkInitial ? 'checked' : ''}>`);
+            </script>
+            <span class="theme-toggle-slider">
+                <i class="theme-icon bi bi-sun"></i>
+                <i class="theme-icon bi bi-moon"></i>
+            </span>
+        </label>
     </div>
 </div>
-
-<script>initializeThemeToggleBtn();</script>

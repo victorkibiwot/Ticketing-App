@@ -1,4 +1,14 @@
 /* Global Reset and Base Styles */
+:root {
+    --toggle-bg-off: #6c757d;
+    --toggle-bg-on: #007bff;
+    --toggle-knob-bg: #ffffff;
+}
+
+html.dark-mode {
+    --toggle-bg-on: #4da8ff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -407,3 +417,105 @@ body.sidebar-open {
 }
 
 
+/* Toggle theme styles */
+/* Theme toggle styles */
+.theme-toggle-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.theme-toggle-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--toggle-bg-off);
+    border-radius: 34px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.theme-toggle-slider:before {
+    content: '';
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--toggle-knob-bg);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.theme-toggle-input:checked + .theme-toggle-slider:before {
+    transform: translateX(30px);
+}
+
+.theme-toggle-slider .theme-icon {
+    font-size: 16px;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    z-index: 1;
+}
+
+/* Sun Icon */
+.theme-toggle-slider .bi-sun {
+    margin-left: 1px; /* Push sun icon a bit to the right */
+    color: #fff;
+    opacity: 1;
+}
+
+/* Moon Icon (ALWAYS visible) */
+.theme-toggle-slider .bi-moon {
+    margin-right: 1px; /* Push moon icon a bit to the left */
+    color: #fff; /* Give it a visible color on grey background */
+    opacity: 0.6;
+    z-index: 3;  /* Increase to be above the knob */
+    position: relative;
+}
+
+/* When toggle is ON */
+.theme-toggle-input:checked + .theme-toggle-slider .bi-sun {
+    opacity: 0.6;
+}
+
+.theme-toggle-input:checked + .theme-toggle-slider {
+    background-color: var(--toggle-bg-on);
+}
+
+.theme-toggle-label:hover .theme-toggle-slider {
+    background-color: #5a6268;
+}
+
+.dark-mode .theme-toggle-label:hover .theme-toggle-slider {
+    background-color: #2a6db6;
+}
+
+.theme-toggle-input:checked + .theme-toggle-slider:hover {
+    background-color: #0056b3;
+}
+
+.dark-mode .theme-toggle-input:checked + .theme-toggle-slider:hover {
+    background-color: #3a7f9f;
+}

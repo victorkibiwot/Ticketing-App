@@ -125,31 +125,22 @@ if (logoutLink) {
     });
 }
 
+
 /**
  * Toggle between light and dark themes
  */
 function toggleTheme() {
     const html = document.documentElement;
     const isDark = html.classList.toggle('dark-mode');
-    const sunIcon = document.querySelector('.theme-icon.bi-sun');
-    const moonIcon = document.querySelector('.theme-icon.bi-moon');
-    const themeText = document.querySelector('.theme-text');
+    const themeToggleInput = document.getElementById('themeToggleInput');
 
-    // Update icons and text
-    if (sunIcon && moonIcon && themeText) {
-        sunIcon.classList.toggle('d-none', isDark);
-        moonIcon.classList.toggle('d-none', !isDark);
-        themeText.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    // Update checkbox state
+    if (themeToggleInput) {
+        themeToggleInput.checked = isDark;
     }
 
     // Save theme preference
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-}
-
-// Initialize theme toggle button immediately
-const themeToggleBtn = document.getElementById('themeToggleBtn');
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', toggleTheme);
 }
 
 /**
@@ -163,21 +154,14 @@ function getCurrentTheme() {
 }
 
 function initializeThemeToggleBtn() {
-    const html = document.documentElement;
-    const isDark = html.classList.contains('dark-mode');
-    const sunIcon = document.querySelector('.theme-icon.bi-sun');
-    const moonIcon = document.querySelector('.theme-icon.bi-moon');
-    const themeText = document.querySelector('.theme-text');
+    const themeToggleInput = document.getElementById('themeToggleInput');
 
-    if (sunIcon && moonIcon && themeText) {
-        sunIcon.classList.toggle('d-none', isDark);
-        moonIcon.classList.toggle('d-none', !isDark);
-        themeText.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    if (themeToggleInput) {
+        themeToggleInput.addEventListener('change', toggleTheme);
     }
 }
 
-
-// initializeThemeToggleBtn();
+initializeThemeToggleBtn();
 
 
 

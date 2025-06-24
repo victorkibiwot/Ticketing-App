@@ -72,7 +72,6 @@ body {
 
 
 
-
 /* Dark Mode Styles */
 .dark-mode body {
     background-color: #121212 !important;
@@ -122,49 +121,43 @@ body {
     background: #1e1e1e !important;
 }
 
+
+
+/* Theme toggle styles */
 .toggle-container {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
     text-align: center;
 }
 
-.theme-toggle-btn {
-    padding: 4px 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
-    border: 1px solid;
-    border-color: #6c757d;
-    border-radius: 15px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
 
-.dark-mode .theme-toggle-btn {
-    color: #4da8ff;
-    border-color: #4da8ff;
-}
+/* For maximum browser support */
+.dark-mode input::-webkit-input-placeholder { color: #cccccc !important; }
+.dark-mode input:-moz-placeholder { color: #cccccc !important; }
+.dark-mode input::-moz-placeholder { color: #cccccc !important; }
+.dark-mode input:-ms-input-placeholder { color: #cccccc !important; }
 
-
-.dark-mode .theme-toggle-btn .theme-icon {
-    color: #ffd700;
-}
-
-.theme-toggle-btn:hover {
-    background-color: #778592;
-    color: #fff;
-}
-
-.dark-mode .theme-toggle-btn:hover {
-    background-color: #065aad;
-    color: #f8f9fa;
-}
-
-/* Fix autofill background in dark mode */
-.dark-mode input:-webkit-autofill {
+/* Full autofill fix in dark mode */
+.dark-mode input:-webkit-autofill,
+.dark-mode input:-webkit-autofill:hover,
+.dark-mode input:-webkit-autofill:focus,
+.dark-mode input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0px 1000px #2c2c2c inset !important;
     -webkit-text-fill-color: #f1f1f1 !important;
     caret-color: #f1f1f1 !important;
     border: 1px solid #555 !important;
+    transition: background-color 5000s ease-in-out 0s; /* Prevent flash */
+}
+
+.dark-mode input:-internal-autofill-selected {
+    background-color: #2c2c2c !important;
+    color: #f1f1f1 !important;
+}
+
+
+
+
+/* Placeholder color fix in dark mode */
+.dark-mode input::placeholder {
+    color: #cccccc !important;  /* or #f1f1f1 to match your text color */
+    opacity: 1 !important; /* Some browsers apply reduced opacity by default */
 }
