@@ -29,8 +29,11 @@
     <!-- Main Content -->
     <div id="main" class="main-content">
         <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">View All Tickets</h1>
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 class="page-title" style="margin: 0;">View All Tickets</h1>
+            <span class="user-status top-bar-badge <%= role && role.includes('ADMIN') ? 'status-admin' : 'status-user' %>">
+                <%= role && role.includes('ADMIN') ? 'ADMIN' : 'USER' %>
+            </span>
         </div>
 
         <!-- Filter menu -->

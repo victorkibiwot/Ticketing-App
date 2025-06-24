@@ -98,9 +98,13 @@ body {
 }
 
 .theme-toggle-btn {
-    position: absolute;
+    /* position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); */
+    margin-left: auto;
+    position: static;  
+    transform: none;
+    
     padding: 4px 12px;
     cursor: pointer;
     z-index: 100;

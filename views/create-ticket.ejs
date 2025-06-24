@@ -24,8 +24,11 @@
     <%- include('navbar', { currentPage: 'create-ticket' }) %>
     <div class="sidebar-overlay"></div>
     <div id="main" class="main-content">
-        <div class="page-header">
-            <h1 class="page-title">Create Ticket</h1>
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 class="page-title" style="margin: 0;">Create Ticket</h1>
+            <span class="user-status top-bar-badge <%= role && role.includes('ADMIN') ? 'status-admin' : 'status-user' %>">
+                <%= role && role.includes('ADMIN') ? 'ADMIN' : 'USER' %>
+            </span>
         </div>
 
         <!-- Ticket Form -->
