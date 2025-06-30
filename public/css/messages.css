@@ -1,0 +1,309 @@
+/* Light theme defaults */
+:root {
+  --bg-content: #ffffff;
+  --text-color: #212529;
+  --incoming-bg: #f1f3f5;
+  --incoming-text: #212529;
+  --outgoing-bg: #0d6efd;
+  --outgoing-text: #ffffff;
+  --system-text: #6c757d;
+  --timestamp-color: #6c757d;
+  --card-border: #e9ecef;
+}
+
+/* Dark mode overrides */
+.dark-mode {
+  --bg-content: #212529;
+  --text-color: #f8f9fa;
+  --incoming-bg: #343a40;
+  --incoming-text: #e9ecef;
+  --outgoing-bg: #4c8bfd;
+  --outgoing-text: #ffffff;
+  --system-text: #adb5bd;
+  --timestamp-color: #adb5bd;
+  --card-border: #495057;
+}
+
+body {
+  background-color: var(--bg-content);
+  color: var(--text-color);
+}
+
+.chat-window {
+  flex-grow: 1;
+  /* max-height: 60vh; */
+  overflow-y: auto;
+  background-color: var(--bg-content);
+  border: 1px solid var(--card-border);
+  border-radius: 0.1rem;
+  padding: 1.5rem;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  margin-bottom: 1rem;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-bubble.incoming {
+  background-color: var(--incoming-bg);
+  color: var(--incoming-text);
+  border-bottom-left-radius: 0.25rem;
+}
+
+.message-bubble.outgoing {
+  background-color: var(--outgoing-bg);
+  color: var(--outgoing-text);
+  border-bottom-right-radius: 0.25rem;
+}
+
+.message-bubble .timestamp {
+  font-size: 0.75rem;
+  color: var(--timestamp-color);
+  margin-top: 0.25rem;
+  text-align: right;
+  opacity: 0.8;
+}
+
+
+/* Avatar bubble */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #6c757d; /* fallback gray */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.avatar.me-2 {
+  margin-right: 0.5rem;
+}
+
+.avatar.ms-2 {
+  margin-left: 0.5rem;
+}
+
+.system-msg {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--system-text);
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.typing-indicator {
+  font-size: 0.85rem;
+  color: var(--system-text);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background-color: var(--system-text);
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1.4s infinite both;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  20% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.card-header {
+  border-bottom: 1px solid var(--card-border);
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  background-color: var(--bg-content);
+  border-top: 1px solid var(--card-border);
+  position: relative;    
+}
+
+.dark-mode .form-control {
+  background-color: #343a40;
+  color: #f8f9fa;
+  border-color: #495057;
+}
+
+.dark-mode .form-control::placeholder {
+  color: #adb5bd;
+}
+
+.chat-window > div {
+  width: 100%;
+}
+
+.chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-window::-webkit-scrollbar-track {
+  background: var(--bg-content);
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+  background: var(--timestamp-color);
+  border-radius: 4px;
+}
+
+/* Wraps the “Typing...” indicator above the input */
+.typing-indicator-wrapper {
+  position: absolute;
+  top: -1.5rem;           /* 1.5rem above the footer top */
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* in messages2.css */
+#loadingIndicator {
+  /* use your system-text variable for dark mode legibility */
+  color: var(--system-text) !important;
+}
+.dark-mode #loadingIndicator {
+  color: var(--system-text) !important;
+}
+.typing-indicator-wrapper .typing-indicator {
+  color: var(--system-text);
+}
+
+/* Hide it when `.d-none` is present */
+.d-none {
+  display: none !important;
+}
+
+/* Preview pills */
+/* in messages2.css (or wherever) */
+#attachmentPreview .file-pill {
+  background: var(--incoming-bg);
+  color: var(--incoming-text);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+#attachmentPreview .file-pill .remove-file {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Improved attach files styles  */
+.attach-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem 0.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.attach-btn:hover {
+  background-color: var(--incoming-bg);
+}
+#attachedFilesList {
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+#attachedFilesList .file-item {
+  display: inline-block;
+  margin-right: 0.5rem;
+  background: var(--incoming-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  position: relative;
+}
+#attachedFilesList .file-item .remove-file {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+
+.message-bubble.outgoing .timestamp {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+
+@media (max-width: 576px) {
+  .message-bubble .timestamp {
+    font-size: 0.7rem;
+  }
+}
+
+
+/* Styling attachments */
+.attachments {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+}
+
+/* General attachment link style */
+.attachment-link {
+  display: inline-block;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  color: #0d6efd; /* Bootstrap primary blue */
+  background-color: rgba(13, 110, 253, 0.1); /* light blue background */
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.attachment-link:hover {
+  background-color: rgba(13, 110, 253, 0.2);
+  text-decoration: underline;
+}
+
+.dark-mode .attachment-link {
+  color: #cce3ff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .attachment-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Improve visibility of links in outgoing (blue) bubbles */
+.message-bubble.outgoing .attachment-link {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.message-bubble.outgoing .attachment-link:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+

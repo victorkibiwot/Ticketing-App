@@ -96,7 +96,7 @@ router.get('/dashboard', async (req, res) => {
     const role = rolesRes.data.roles;
 
     req.session.name = name ;
-    req.session.usermame = username ;
+    req.session.username = username ;
     req.session.role = role ;
 
     res.render('dashboard', { 

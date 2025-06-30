@@ -22,5 +22,10 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.1",
     "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.30.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0"
   }
 }

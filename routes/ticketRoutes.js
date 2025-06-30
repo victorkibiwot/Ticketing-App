@@ -6,6 +6,7 @@ const multer = require('multer');
 const upload = multer();
 const FormData = require('form-data');
 const fs = require('fs');
+const stream = require('stream');
 
 // Show form
 router.get('/create-ticket', (req, res) => {
@@ -364,6 +365,159 @@ router.post('/tickets/reopen', upload.array('attachments'), async (req, res) => 
 });
 
 
+// View message routes
+// Just render the empty shell
+router.get('/messages', (req, res) => {
+  const { role, username, token, jsessionid } = req.session;
+  const ticketId = req.query.ticketId;
+
+  if (!token || !jsessionid) {
+    req.flash('error', 'Please log in to view the tickets!');
+    return res.redirect('/');
+  }
+
+  res.render('messages', {
+    csrfToken: req.csrfToken(),
+    role,
+    username,
+    ticketId
+  });
+});
+
+
+// API endpoint to fetch messages via fetch()
+router.get('/api/messages/:ticketId', async (req, res) => {
+  const { ticketId } = req.params;
+  const token = req.session.token;
+  const jsessionid = req.session.jsessionid;  
+
+  if (!token || !jsessionid) {
+    req.flash('error', 'Please log in to view the tickets!');
+    return res.redirect('/');
+  }
+
+  try {
+    const response = await axiosInstance2.get(`/api/getTicketMessages/${ticketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: jsessionid
+      }
+    });
+
+    const { messages } = response.data;
+    return res.json({ messages });
+
+  } catch (err) {
+    req.flash('error', err.response.data.error || 'Session expired! Please log in to view the tickets!');
+    console.error(err.response.data);
+    return res.redirect('/');
+  }
+});
+
+
+// Handle message submission
+router.post('/create-message', upload.array('attachments'), async (req, res) => {
+  const token = req.session.token;
+  const jsessionid = req.session.jsessionid;
+  const { ticketId, message } = req.body;
+  const files = req.files;
+
+  if (!token || !jsessionid) {
+    return res.json({
+      success: false,
+      message: 'Missing auth token or session cookie.',
+      redirect: '/'
+    });
+  }
+
+  try {
+    // Prepare FormData to forward to the API
+    const formData = new FormData();
+    formData.append('ticketId', ticketId);
+    formData.append('message', message);
+
+    // If there are files, append them
+    if (files && files.length > 0) {
+      files.forEach(file => {
+        formData.append('attachments', file.buffer, file.originalname);
+      });
+    }
+
+    // Forward the request to your API
+    await axiosInstance2.post('/api/createMessage', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: jsessionid,
+        ...formData.getHeaders() // Important: sets proper multipart/form-data headers
+      }
+    });
+
+    return res.json({
+      success: true,
+      message: 'Message Sent Successfully!',
+      redirect: '/tickets'
+    });
+
+  } catch (err) {
+    console.error(err.response?.data || err);
+
+    let errorMessage = 'Error creating message. Please try again.';
+    if (err.response && err.response.data && err.response.data.message) {
+      errorMessage = err.response.data.message;
+    }
+
+    return res.json({
+      success: false,
+      message: errorMessage,
+      redirect: '/tickets'
+    });
+  }
+});
+
+
+// Handler to download attachments
+router.get('/download-attachment/:attachmentId', async (req, res) => {
+  const { attachmentId } = req.params;
+  const token = req.session.token;
+  const jsessionid = req.session.jsessionid;
+
+  if (!token || !jsessionid) {
+    req.flash('error', 'Please log in to view the tickets!');
+    return res.redirect('/');
+  }
+
+  try {
+    const response = await axiosInstance2.get(`/api/downloadAttachment/${attachmentId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: jsessionid
+      },
+      responseType: 'arraybuffer' // 👈 Needed to download binary files
+    });
+
+  // Get filename from Content-Disposition header or fallback
+  const contentDisposition = response.headers['content-disposition'];
+  let filename = 'attachment';
+
+  if (contentDisposition) {
+    const match = contentDisposition.match(/filename="?([^"]+)"?/);
+    if (match && match[1]) {
+      filename = match[1];
+    }
+  }
+
+  // Send the file back to the client
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.setHeader('Content-Type', response.headers['content-type']);
+  res.send(response.data);
+
+
+  } catch (err) {
+    req.flash('error', err.response.data.error || 'Session expired! Please log in to view the tickets!');
+    console.error('Download error', err);
+    return res.redirect('/');
+  }
+});
 
 
 module.exports = router;
