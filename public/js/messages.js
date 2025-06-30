@@ -151,6 +151,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error(err);
             if (loadingIndicator) loadingIndicator.textContent = 'Error loading messages.';
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Session expired',
+                text: 'Please log in and try again!',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = '/';
+            });
         }
     }
 
