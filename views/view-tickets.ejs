@@ -107,8 +107,6 @@
                         <% tickets.forEach(ticket => { %>
                             <tr
                                 style="cursor: pointer; display: none;"
-                                data-bs-toggle="modal"
-                                data-bs-target="<%= (role && role.includes('ADMIN')) ? '#ticketModal' : '#userTicketModal' %>"
                                 data-ticket='<%= encodeURIComponent(JSON.stringify(ticket)) %>'
                                 class="ticket-row status-<%= ticket.status.replace(/\s+/g, '-').toLowerCase() %>"
                             >

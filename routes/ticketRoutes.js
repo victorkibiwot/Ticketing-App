@@ -91,7 +91,7 @@ router.get('/tickets', async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const role = req.session.role;
-  const username = req.session.usermame;
+  const username = req.session.username;
 
   if (!token || !jsessionid) {
     req.flash('error', 'Please log in to view the tickets!');
@@ -108,6 +108,7 @@ router.get('/tickets', async (req, res) => {
     });
     
     const tickets = response.data.tickets;
+
 
     res.render('view-tickets', {
       csrfToken: req.csrfToken(),

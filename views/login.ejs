@@ -30,7 +30,6 @@
         <label class="theme-toggle-label">
             <script>
                 const isDarkInitial = document.documentElement.getAttribute('data-theme-initial') === 'dark';
-                console.log(isDarkInitial);
                 document.write(`<input type="checkbox" id="themeToggleInput" class="theme-toggle-input" ${isDarkInitial ? 'checked' : ''}>`);
             </script>
             <span class="theme-toggle-slider">

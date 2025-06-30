@@ -233,12 +233,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const ticketRows = document.querySelectorAll('.ticket-row');
     ticketRows.forEach(row => {
         row.addEventListener('click', function (e) {
-            if (e.target.classList.contains('message-icon')) return; // Skip if clicking message icon
+            // if (e.target.classList.contains('message-icon')) return; // Skip if clicking message icon
+            if (e.target.closest('.message-icon-cell')) {
+                e.stopPropagation(); // Block row click behavior
+                return;
+            }
             const ticketData = JSON.parse(decodeURIComponent(this.getAttribute('data-ticket')));
             if (window.userRole && window.userRole.includes('ADMIN')) {
                 populateModal(ticketData);
+                const modal = new bootstrap.Modal(document.getElementById('ticketModal'));
+                modal.show();
             } else {
                 populateUserModal(ticketData);
+                const modal = new bootstrap.Modal(document.getElementById('userTicketModal'));
+                modal.show();
             }
         });
     });
