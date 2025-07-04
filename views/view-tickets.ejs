@@ -125,9 +125,17 @@
                                 <% }); %>
                                 <!-- Message Icon (Hover) -->
                                 <td class="message-icon-cell">
-                                    <span class="message-icon-wrapper">
-                                        <i class="bi bi-envelope message-icon" data-ticket-id="<%= ticket.ticketId %>" title="Open Messages" aria-label="Open messages for ticket <%= ticket.ticketId %>"></i>
-                                    </span>
+                                    <% if (
+                                        !(role.includes('ADMIN')) || 
+                                        (role.includes('ADMIN') && (ticket.creatorUsername === username || ticket.assigneeUsername === username))
+                                    ) { %>
+                                        <span class="message-icon-wrapper">
+                                            <i class="bi bi-envelope message-icon" 
+                                            data-ticket-id="<%= ticket.ticketId %>" 
+                                            title="Open Messages" 
+                                            aria-label="Open messages for ticket <%= ticket.ticketId %>"></i>
+                                        </span>
+                                    <% } %>
                                 </td>
                             </tr>
                         <% }); %>
