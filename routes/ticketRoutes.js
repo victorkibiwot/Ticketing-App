@@ -213,6 +213,62 @@ router.post('/tickets/assign', upload.none(), async (req, res) => {
 });
 
 
+// Reasign ticket route
+router.post('/tickets/reassign', upload.none(), async (req, res) => {
+  const { ticketId, assigneeUsername, priority } = req.body;
+
+  // Prepare form data
+  const formDataAssign = new FormData();
+  formDataAssign.append('ticketId', ticketId);
+  formDataAssign.append('assigneeUsername', assigneeUsername);
+  formDataAssign.append('priority', priority);
+
+  const token = req.session.token;
+  const jsessionid = req.session.jsessionid;
+
+  if (!token || !jsessionid) {
+    return res.json({ success: false, message: 'Session expired. Please login again.', redirect: '/' });
+  }
+
+  try {
+    const response = await axiosInstance2.post('/api/reassignTicket',
+      formDataAssign,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Cookie: jsessionid,
+          ...formDataAssign.getHeaders() // Important: sets proper multipart/form-data headers
+
+        }
+      }
+    );
+
+    return res.json({
+        success: true,
+        message: response.data.message || 'Ticket reassigned successfully!',
+        redirect: '/tickets'
+      });
+
+  } catch (err) {
+    console.error('Error reassigning ticket:', err.response?.data || err.message);
+    if (err.response && err.response.status === 403) {
+        return res.json({
+            success: false,
+            forbidden: true,
+            message: err.response.data.error || 'You cannot assign your own ticket.',
+            redirect: '/tickets'
+        });
+    }
+
+    return res.json({
+        success: false,
+        message: err.response?.data?.message || 'Assignment failed on the API side.',
+        redirect: '/tickets'
+    });
+  }
+});
+
+
 // Closing ticket route
 router.post('/tickets/close', async (req, res) => {
     const { ticketId } = req.query; 

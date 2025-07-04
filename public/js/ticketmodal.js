@@ -4,6 +4,7 @@ let allUsers = [];
 let selectedAssignee = null;
 let currentTicketId = null;
 let currentTicketCreator = null;
+let assignFormMode = null;
 
 /**
  * Fetch available assignees
@@ -97,6 +98,9 @@ function populateModal(ticket) {
     loadAssignees();
 
     const assignTab = document.getElementById('assign-tab');
+    const assignTabLabel = document.getElementById('assign-tab-label');
+
+
     if (assignTab) {
         if (ticket.assigneeUsername && ticket.assigneeUsername.trim() !== '' || window.currentUsername === ticket.creatorUsername) {
             assignTab.classList.add('disabled-tab');
@@ -104,6 +108,30 @@ function populateModal(ticket) {
         } else {
             assignTab.classList.remove('disabled-tab');
             assignTab.removeAttribute('title');
+        }
+    }
+
+
+    if (assignTab) {
+        const isAssigned = ticket.assigneeUsername && ticket.assigneeUsername.trim() !== '';
+        const isCreator = window.currentUsername === ticket.creatorUsername;
+        const isClosed = (ticket.status || '').toLowerCase() === 'closed';
+
+        if (isCreator || isClosed) {
+            assignTab.classList.add('disabled-tab');
+            assignTab.setAttribute('title', isClosed ? 'Ticket is closed' : 'Cannot assign your own ticket');
+            assignTabLabel.innerText = 'Assign Ticket';
+            assignFormMode = null;
+        } else if (isAssigned) {
+            assignTab.classList.remove('disabled-tab');
+            assignTab.removeAttribute('title');
+            assignTabLabel.innerText = 'Re-assign Ticket';
+            assignFormMode = 'reassign';
+        } else {
+            assignTab.classList.remove('disabled-tab');
+            assignTab.removeAttribute('title');
+            assignTabLabel.innerText = 'Assign Ticket';
+            assignFormMode = 'assign';
         }
     }
 }
@@ -183,7 +211,6 @@ function renderSearchResults(users) {
  * Assign a ticket to a user
  */
 function confirmAssignment() {
-    const assigneeInput = document.getElementById('assigneeInput');
     const prioritySelect = document.getElementById('prioritySelect');
     const csrfToken = document.getElementById('csrfToken').value;
 
@@ -213,12 +240,13 @@ function confirmAssignment() {
             formData.append('priority', prioritySelect.value);
             formData.append('_csrf', csrfToken);
 
+            const endpoint = assignFormMode === 'reassign' ? '/tickets/reassign' : '/tickets/assign';
             submitForm({
                 form: null,
-                url: '/tickets/assign',
-                loadingTitle: 'Assigning ticket...',
-                successTitle: 'Ticket assigned!',
-                errorTitle: 'Assignment Failed',
+                url: endpoint,
+                loadingTitle: assignFormMode === 'reassign' ? 'Re-assigning ticket...' : 'Assigning ticket...',
+                successTitle: assignFormMode === 'reassign' ? 'Ticket re-assigned!' : 'Ticket assigned!',
+                errorTitle: assignFormMode === 'reassign' ? 'Re-assignment Failed' : 'Assignment Failed',
                 body: formData,
                 headers: { 'CSRF-Token': csrfToken }
             });
