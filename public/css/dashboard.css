@@ -57,3 +57,34 @@ body {
     gap: 20px;
 }
 
+/* Styling for bullet points */
+.status-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.status-list li::before {
+  content: '●';
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.5em;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+.bullet-open::before {
+  color: #6c757d; /* gray */
+}
+
+.bullet-in-progress::before {
+  color: #0d6efd; /* blue */
+}
+
+.bullet-resolved::before {
+  color: #198754; /* green */
+}
+
+.bullet-closed::before {
+  color: #dc3545; /* red */
+}
+

@@ -7,9 +7,10 @@ const upload = multer();
 const FormData = require('form-data');
 const fs = require('fs');
 const stream = require('stream');
+const validateToken = require('./middlewares/validateToken');
 
 // Show form
-router.get('/create-ticket', (req, res) => {
+router.get('/create-ticket', validateToken, (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const username = req.session.username;
@@ -26,7 +27,7 @@ router.get('/create-ticket', (req, res) => {
 });
 
 // Handle submission
-router.post('/create-ticket', upload.array('attachments'), async (req, res) => {
+router.post('/create-ticket', validateToken, upload.array('attachments'), async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const { title, description } = req.body;
@@ -87,7 +88,7 @@ router.post('/create-ticket', upload.array('attachments'), async (req, res) => {
 
 
 // View all tickets route
-router.get('/tickets', async (req, res) => {
+router.get('/tickets', validateToken, async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const role = req.session.role;
@@ -126,7 +127,7 @@ router.get('/tickets', async (req, res) => {
 
 
 // View all assignable users
-router.get('/assignees', async (req, res) => {
+router.get('/assignees', validateToken, async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
 
@@ -158,7 +159,7 @@ router.get('/assignees', async (req, res) => {
 
 
 // Assign Ticket Route
-router.post('/tickets/assign', upload.none(), async (req, res) => {
+router.post('/tickets/assign', validateToken, upload.none(), async (req, res) => {
   const { ticketId, assigneeUsername, priority } = req.body;
 
   // Prepare form data
@@ -214,7 +215,7 @@ router.post('/tickets/assign', upload.none(), async (req, res) => {
 
 
 // Reasign ticket route
-router.post('/tickets/reassign', upload.none(), async (req, res) => {
+router.post('/tickets/reassign', validateToken, upload.none(), async (req, res) => {
   const { ticketId, assigneeUsername, priority } = req.body;
 
   // Prepare form data
@@ -270,7 +271,7 @@ router.post('/tickets/reassign', upload.none(), async (req, res) => {
 
 
 // Closing ticket route
-router.post('/tickets/close', async (req, res) => {
+router.post('/tickets/close', validateToken, async (req, res) => {
     const { ticketId } = req.query; 
     const token = req.session.token;
     const jsessionid = req.session.jsessionid;
@@ -318,7 +319,7 @@ router.post('/tickets/close', async (req, res) => {
 });
 
 // Resolving ticket route
-router.post('/tickets/resolve', async (req, res) => {
+router.post('/tickets/resolve', validateToken, async (req, res) => {
     const { ticketId } = req.query;
     const token = req.session.token;
     const jsessionid = req.session.jsessionid;
@@ -363,7 +364,7 @@ router.post('/tickets/resolve', async (req, res) => {
 
 
 // Route to reopen ticket
-router.post('/tickets/reopen', upload.array('attachments'), async (req, res) => {
+router.post('/tickets/reopen', validateToken, upload.array('attachments'), async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const { ticketId, message } = req.body;
@@ -424,7 +425,7 @@ router.post('/tickets/reopen', upload.array('attachments'), async (req, res) => 
 
 // View message routes
 // Just render the empty shell
-router.get('/messages', (req, res) => {
+router.get('/messages', validateToken, (req, res) => {
   const { role, username, token, jsessionid } = req.session;
   const ticketId = req.query.ticketId;
 
@@ -443,7 +444,7 @@ router.get('/messages', (req, res) => {
 
 
 // API endpoint to fetch messages via fetch()
-router.get('/api/messages/:ticketId', async (req, res) => {
+router.get('/api/messages/:ticketId', validateToken, async (req, res) => {
   const { ticketId } = req.params;
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;  
@@ -473,7 +474,7 @@ router.get('/api/messages/:ticketId', async (req, res) => {
 
 
 // Handle message submission
-router.post('/create-message', upload.array('attachments'), async (req, res) => {
+router.post('/create-message', validateToken, upload.array('attachments'), async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const { ticketId, message } = req.body;
@@ -533,7 +534,7 @@ router.post('/create-message', upload.array('attachments'), async (req, res) => 
 
 
 // Handler to download attachments
-router.get('/download-attachment/:attachmentId', async (req, res) => {
+router.get('/download-attachment/:attachmentId', validateToken, async (req, res) => {
   const { attachmentId } = req.params;
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;

@@ -36,25 +36,31 @@
         <!-- Placeholder Content Sections -->
         <div class="grid-container">
             <div class="content-placeholder">
-                <h3>User Details</h3>
-                <p>Welcome, <strong><%= name || 'User' %></strong></p>
-                <p>Role: <em><strong><%= role %></strong></em></p>
+                <h3>User Stats</h3>
+                <p>Welcome <strong><%= name || 'User' %></strong>, below is a summary of your ticket statistics.</p>
+                <ul class="status-list">
+                    <li>Total Tickets: <strong><%= ticketStats.total %></strong></li>
+                    <li class="bullet-open">Open Tickets: <strong><%= ticketStats.open %></strong></li>
+                    <li class="bullet-in-progress">In Progress: <strong><%= ticketStats.inprogress %></strong></li>
+                    <li class="bullet-resolved">Resolved Tickets: <strong><%= ticketStats.resolved %></strong></li>
+                    <li class="bullet-closed">Closed Tickets: <strong><%= ticketStats.closed %></strong></li>
+                </ul>
             </div>
 
             <div class="content-placeholder">
                 <h3>Recent Activity</h3>
-                <p>Show a feed of recent actions, new tickets, or important updates. This helps users stay informed about what's happening in the system.</p>
+                <p>Here's a comprehensive feed of your most recent and important updates.</p>
                 <ul>
-                    <li>Ticket #12345 updated - <em>10 mins ago</em></li>
-                    <li>New ticket #12346 created - <em>30 mins ago</em></li>
-                    <li>Report "Monthly Summary" generated - <em>1 hour ago</em></li>
+                    <% activity.forEach(item => { %>
+                    <li><%= item.message %> - <em><%= item.timeAgo %></em></li>
+                    <% }) %>
                 </ul>
             </div>
         </div>
 
         <div class="content-placeholder" style="margin-top: 20px;">
             <h3>Quick Actions</h3>
-            <p>Provide buttons or links for common tasks that users might want to perform directly from the dashboard.</p>
+            <p>Here's some quick actions you might want to perform directly from the dashboard.</p>
             <a href="/create-ticket" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px; text-decoration: none; display: inline-block; text-align: center;">Create New Ticket</a>
             <a href="/tickets" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; text-align: center;">View All Tickets</a>
         </div>
