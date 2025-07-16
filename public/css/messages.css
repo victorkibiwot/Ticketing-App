@@ -306,4 +306,14 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
 }
 
+/* Styling message icons (sending .. ) */
+.timestamp i.bi-clock {
+  font-style: normal;
+  animation: pulse 1.2s infinite ease-in-out;
+}
 
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}

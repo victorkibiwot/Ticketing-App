@@ -21,51 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return colors[index];
     }
 
-
-    // ========== Render Messages ==========
-    // function renderMessages(messages) {
-    //     const container = document.getElementById('chatWindow');
-    //     container.innerHTML = '';
-
-    //     messages.forEach(msg => {
-    //         const isSystemMsg = /created the ticket|reopened the ticket/i.test(msg.message);
-    //         const isCurrentUser = msg.creatorName === currentUser;
-
-    //         if (isSystemMsg) {
-    //             container.innerHTML += `
-    //                 <div class="system-msg text-center mb-3">
-    //                     ${msg.message}
-    //                 </div>`;
-    //             return;
-    //         }
-
-    //         container.innerHTML += `
-    //             <div class="d-flex w-100 mb-2 ${isCurrentUser ? 'justify-content-end' : 'justify-content-start'} align-items-end">
-    //                 ${!isCurrentUser ? `
-    //                     <div class="avatar me-2" style="background-color: ${getColorFromName(msg.creatorName)}">
-    //                     ${getInitials(msg.creatorName)}
-    //                     </div>
-    //                 ` : ''}
-    //                 <div class="message-bubble ${isCurrentUser ? 'outgoing' : 'incoming'}">
-    //                     ${msg.message}
-    //                     <div class="timestamp">
-    //                         ${new Date(msg.createdAt).toLocaleTimeString([], {
-    //                             hour: '2-digit',
-    //                             minute: '2-digit'
-    //                         })}
-    //                     </div>
-    //                 </div>
-    //                 ${isCurrentUser ? `
-    //                     <div class="avatar ms-2" style="background-color: ${getColorFromName(currentUser)}">
-    //                     ${getInitials(currentUser)}
-    //                     </div>
-    //                 ` : ''}
-    //             </div>`;
-    //     });
-
-    //     container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
-    // }
-
     function renderMessages(messages) {
         const container = document.getElementById('chatWindow');
         container.innerHTML = '';
@@ -123,6 +78,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    }
+
+
+    // Funtion to add message to the chatwindow after submission
+    function appendMessage(msg) {
+        const container = document.getElementById('chatWindow');
+        const isCurrentUser = msg.creatorName === currentUser;
+
+        let attachmentsHTML = '';
+        if (msg.attachments?.length) {
+            attachmentsHTML = `<div class="attachments mt-2">
+            ${msg.attachments.map(att => `
+                <span class="attachment-link"><i class="bi bi-paperclip"></i> ${att.filename}</span>
+            `).join('<br>')}
+            </div>`;
+        }
+
+        const avatar = `
+            <div class="avatar ${isCurrentUser ? 'ms-2' : 'me-2'}"
+                style="background-color: ${getColorFromName(msg.creatorName)}">
+            ${getInitials(msg.creatorName)}
+            </div>`;
+
+        const statusIcon = msg.sending
+            ? '<i class="bi bi-clock ms-2 text-muted small" title="Sending..."></i>'
+            : msg.failed
+            ? '<i class="bi bi-exclamation-triangle ms-2 text-danger small" title="Send failed"></i>'
+            : '';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = `d-flex w-100 mb-2 ${isCurrentUser ? 'justify-content-end' : 'justify-content-start'}`;
+        wrapper.id = msg.localId || '';
+
+        wrapper.innerHTML = `
+            ${!isCurrentUser ? avatar : ''}
+            <div class="message-bubble ${isCurrentUser ? 'outgoing' : 'incoming'}">
+            ${msg.message}
+            ${attachmentsHTML}
+            <div class="timestamp">
+                ${new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                ${statusIcon}
+            </div>
+            </div>
+            ${isCurrentUser ? avatar : ''}
+        `;
+
+        container.appendChild(wrapper);
+        container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    }
+
+
+    // fallback for if message fails to send 
+    function markAsFailed(localId) {
+        const bubble = document.getElementById(localId);
+        if (bubble) {
+            const icon = bubble.querySelector('.timestamp i');
+            if (icon) {
+            icon.className = 'bi bi-exclamation-triangle ms-2 text-danger small';
+            icon.title = 'Send failed';
+            }
+        }
     }
 
 
@@ -211,6 +227,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btn.disabled = true;
 
+        const localId = 'msg-' + Date.now();
+
+        // Render optimistic message
+        const optimisticMsg = {
+            creatorName: currentUser,
+            message,
+            createdAt: new Date(),
+            localId,
+            sending: true,
+            attachments: selectedFiles.map(file => ({ filename: file.name }))
+        };
+
+        appendMessage(optimisticMsg);
+
+
+
         const formData = new FormData();
         formData.append('ticketId', ticketId);
         formData.append('message', message);
@@ -220,6 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('attachments', file);
         });
 
+        input.value = '';
+        selectedFiles = [];
+        renderAttachmentPreview();
+
+
         try {
             const res = await fetch('/create-message', {
             method: 'POST',
@@ -228,24 +265,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (res.ok) {
-            input.value = '';
-            selectedFiles = [];
-            renderAttachmentPreview();
-            await fetchMessages();
+                await fetchMessages();
             } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Send failed',
-                text: 'Something went wrong. Please try again.'
-            });
+                markAsFailed(localId);
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Send failed',
+                //     text: 'Something went wrong. Please try again.'
+                // });
             }
         } catch (err) {
             console.error('Send error:', err);
-            Swal.fire({
-            icon: 'error',
-            title: 'Send failed',
-            text: 'Error sending message.'
-            });
+            markAsFailed(localId);
+            // Swal.fire({
+            // icon: 'error',
+            // title: 'Send failed',
+            // text: 'Error sending message.'
+            // });
         } finally {
             btn.disabled = false;
         }
@@ -259,6 +295,3 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchMessages();
     }, 5000);
 });
-
-
-
