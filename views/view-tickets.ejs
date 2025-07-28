@@ -126,8 +126,8 @@
                                 <!-- Message Icon (Hover) -->
                                 <td class="message-icon-cell">
                                     <% if (
-                                        !(role.includes('ADMIN')) || 
-                                        (role.includes('ADMIN') && (ticket.creatorUsername === username || ticket.assigneeUsername === username))
+                                        !(role.includes('ADMIN')) || (role.includes('ADMIN'))
+                                        <!-- (role.includes('ADMIN') && (ticket.creatorUsername === username || ticket.assigneeUsername === username)) -->
                                     ) { %>
                                         <span class="message-icon-wrapper">
                                             <i class="bi bi-envelope message-icon" 

@@ -23,7 +23,7 @@ router.get('/create-ticket', validateToken, (req, res) => {
   res.render('create-ticket', {
       username,
       role
-});
+  });
 });
 
 // Handle submission

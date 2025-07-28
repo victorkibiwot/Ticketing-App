@@ -43,6 +43,7 @@ document.addEventListener('click', function (event) {
     }
 });
 
+
 /**
  * Auto-hide alerts after 2 seconds
  */
