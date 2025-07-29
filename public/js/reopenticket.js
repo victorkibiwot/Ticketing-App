@@ -42,13 +42,6 @@ function reopenTicket(ticketId) {
  * Initialize message icon clicks and reopen form
  */
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.message-icon').forEach(icon => {
-        icon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const ticketId = e.target.getAttribute('data-ticket-id');
-            window.location.href = `/messages?ticketId=${ticketId}`;
-        });
-    });
 
     const reopenTicketForm = document.getElementById('reopenTicketForm');
     if (reopenTicketForm) {

@@ -1,0 +1,35 @@
+<div class="modal fade message-modal" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center" id="messageModalLabel">Messages - Ticket <span id="modalTicketId"></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body d-flex flex-column" style="height: 70vh;">
+        <div id="chatWindow" class="chat-window flex-grow-1 overflow-auto border rounded p-2 bg-light">
+          <div class="text-center text-muted py-3" id="loadingIndicator">Loading messages...</div>
+        </div>
+
+        <div class="mt-3">
+          <div class="d-flex align-items-end gap-2">
+            <label for="attachmentInput" class="btn btn-light p-1 mb-0">
+              <i class="bi bi-paperclip"></i>
+            </label>
+            <input type="file" id="attachmentInput" name="attachments" multiple class="d-none"/>
+
+            <div id="attachmentPreview" class="d-flex gap-1 flex-wrap" style="max-width: 150px;"></div>
+
+            <form id="messageForm" class="flex-grow-1 d-flex gap-2 mb-0">
+              <input type="text" class="form-control" id="messageInput" placeholder="Type your message…" required/>
+              <input type="hidden" id="modalCsrfToken" value="<%= csrfToken %>"/>
+              <button class="btn btn-primary" type="submit" id="sendBtn">
+                <i class="bi bi-send"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

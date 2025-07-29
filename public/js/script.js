@@ -165,20 +165,6 @@ function initializeThemeToggleBtn() {
 initializeThemeToggleBtn();
 
 
-// Event listener for message Icons
-document.addEventListener('DOMContentLoaded', () => {
-    // Other DOMContentLoaded code...
 
-    const messageIcons = document.querySelectorAll('.message-icon');
 
-    messageIcons.forEach(icon => {
-        icon.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent triggering row click/modal
-            const ticketId = icon.dataset.ticketId;
-            if (ticketId) {
-                window.location.href = `/messages/${ticketId}`;
-            }
-        });
-    });
-});
 

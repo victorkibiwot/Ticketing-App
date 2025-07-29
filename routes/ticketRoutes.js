@@ -157,7 +157,6 @@ router.get('/assignees', validateToken, async (req, res) => {
 });
 
 
-
 // Assign Ticket Route
 router.post('/tickets/assign', validateToken, upload.none(), async (req, res) => {
   const { ticketId, assigneeUsername, priority } = req.body;
@@ -420,26 +419,6 @@ router.post('/tickets/reopen', validateToken, upload.array('attachments'), async
       redirect: '/tickets'
     });
   }
-});
-
-
-// View message routes
-// Just render the empty shell
-router.get('/messages', validateToken, (req, res) => {
-  const { role, username, token, jsessionid } = req.session;
-  const ticketId = req.query.ticketId;
-
-  if (!token || !jsessionid) {
-    req.flash('error', 'Please log in to view the tickets!');
-    return res.redirect('/');
-  }
-
-  res.render('messages', {
-    csrfToken: req.csrfToken(),
-    role,
-    username,
-    ticketId
-  });
 });
 
 
