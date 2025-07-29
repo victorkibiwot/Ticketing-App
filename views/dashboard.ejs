@@ -47,13 +47,18 @@
                 </ul>
             </div>
 
+
             <div class="content-placeholder">
                 <h3>Recent Activity</h3>
                 <p>Here's a comprehensive feed of your most recent and important updates.</p>
                 <ul>
-                    <% activity.forEach(item => { %>
-                    <li><%= item.message %> - <em><%= item.timeAgo %></em></li>
-                    <% }) %>
+                    <% if (activity.length > 0) { %>
+                        <% activity.forEach(item => { %>
+                            <li><%= item.message %> - <em><%= item.timeAgo %></em></li>
+                        <% }) %>
+                    <% } else { %>
+                        <li class="text-muted">You have no recent activity.</li>
+                    <% } %>
                 </ul>
             </div>
         </div>
