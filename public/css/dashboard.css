@@ -88,3 +88,9 @@ body {
   color: #dc3545; /* red */
 }
 
+
+.no-activity {
+    list-style: none;
+    padding-left: 1em; /* match the indentation of normal bullets */
+    text-indent: -1em;  /* aligns with bulleted items */
+}

@@ -30,7 +30,7 @@ router.get('/create-ticket', validateToken, (req, res) => {
 router.post('/create-ticket', validateToken, upload.array('attachments'), async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
-  const { title, description } = req.body;
+  const { title, description, department } = req.body;
   const files = req.files;
 
   if (!token || !jsessionid) {
@@ -46,6 +46,7 @@ router.post('/create-ticket', validateToken, upload.array('attachments'), async 
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('department', department);
 
     // If there are files, append them
     if (files && files.length > 0) {

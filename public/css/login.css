@@ -155,7 +155,6 @@ body {
 
 
 
-
 /* Placeholder color fix in dark mode */
 .dark-mode input::placeholder {
     color: #cccccc !important;  /* or #f1f1f1 to match your text color */

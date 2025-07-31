@@ -90,9 +90,24 @@ if (createTicketForm) {
 
     createTicketForm.addEventListener('submit', async function (e) {
         e.preventDefault();
+        const department = document.getElementById('departmentInput').value;
+        if (!department) {
+            e.preventDefault();
+            Swal.fire({
+                position: 'top',
+                icon: 'warning',
+                title: 'Please select a department.',
+                showConfirmButton: false,
+                timer: 2000,
+                toast: true
+            });
+
+            return;
+        }
         const formData = new FormData();
         formData.append('title', createTicketForm.title.value);
         formData.append('description', createTicketForm.description.value);
+        formData.append('department', department);
         selectedFiles.forEach(file => formData.append('attachments', file));
         formData.append('_csrf', createTicketForm.querySelector('input[name="_csrf"]').value);
 

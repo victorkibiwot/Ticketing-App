@@ -120,7 +120,15 @@
                                         <% if (['createdAt', 'updatedAt', 'resolvedAt', 'closedAt'].includes(header) && value !== null && !isNaN(new Date(value).getTime())) { %>
                                             <%= new Date(value).toLocaleString() %>
                                         <% } else { %>
-                                            <span class="text-muted"><%= value === null ? '—' : value %></span>
+                                            <!-- <span class="text-muted"><%= value === null ? '—' : value %></span> -->
+                                             <% if (header === 'title' && value) { %>
+                                                <span class="text-muted">
+                                                    <%= value.split(' ').slice(0, 5).join(' ') %><%= value.split(' ').length > 4 ? '...' : '' %>
+                                                </span>
+                                            <% } else { %>
+                                                <span class="text-muted"><%= value === null ? '—' : value %></span>
+                                            <% } %>
+
                                         <% } %>
                                     </td>
                                 <% }); %>

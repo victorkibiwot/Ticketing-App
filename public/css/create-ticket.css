@@ -14,6 +14,10 @@
     --content-title: #007bff;
     --button-bg: #007bff;
     --button-hover-bg: #0056b3;
+    --custom-grey-btn-bg: #6c757d;
+    --custom-grey-btn-border: #6c757d;
+    --custom-grey-btn-hover-bg: #5a6268;
+    --custom-grey-btn-hover-border: #545b62;
 }
 
 html.dark-mode {
@@ -149,6 +153,19 @@ body.sidebar-open {
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
+.custom-grey-btn {
+    background-color: var(--custom-grey-btn-bg);
+    border-color: var(--custom-grey-btn-border);
+    color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-grey-btn:hover {
+    background-color: var(--custom-grey-btn-hover-bg);
+    border-color: var(--custom-grey-btn-hover-border);
+    color: #fff;
+}
+
 .file-select-btn {
     background-color: var(--button-bg);
     color: #fff;
@@ -183,3 +200,12 @@ body.sidebar-open {
 .create-ticket-button:hover {
     background-color: var(--button-hover-bg);
 }
+
+
+/* Match login form input borders in dark mode */
+.form-group input,
+.form-group textarea {
+    border: 1px solid #495057;
+}
+
+
