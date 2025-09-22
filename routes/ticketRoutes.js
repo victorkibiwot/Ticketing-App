@@ -89,42 +89,95 @@ router.post('/create-ticket', validateToken, upload.array('attachments'), async 
 
 
 // View all tickets route
-router.get('/tickets', validateToken, async (req, res) => {
+// router.get('/tickets', validateToken, async (req, res) => {
+//   const token = req.session.token;
+//   const jsessionid = req.session.jsessionid;
+//   const role = req.session.role;
+//   const username = req.session.username;
+
+//   if (!token || !jsessionid) {
+//     req.flash('error', 'Please log in to view the tickets!');
+//     return res.redirect('/');
+//   }
+
+//   try {
+//     const response = await axiosInstance2.get('/api/getAllTickets', {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         Cookie: jsessionid
+//       }
+//     });
+    
+//     const tickets = response.data.tickets;
+
+
+//     res.render('view-tickets', {
+//       csrfToken: req.csrfToken(),
+//       tickets,
+//       role,
+//       username
+//     });
+
+
+//   } catch (err) {
+//     console.error(err.response?.data || err);
+//     return res.redirect('/dashboard?error=Failed to load tickets.');
+//   }
+// });
+
+// Page shell
+router.get("/tickets", validateToken, (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
   const role = req.session.role;
   const username = req.session.username;
 
+  const headerMapping = {
+                    ticketId: "Ticket ID",
+                    title: "Title",
+                    priority: "Priority",
+                    status: "Status",
+                    createdAt: "Created At",
+                    updatedAt: "Updated At",
+                    assigneeUsername: "Assigned To",
+                    creatorUsername: "Created By",
+                    assignedByUsername: "Assigned By",
+                    description: "Description",
+                    resolvedAt: "Resolved At",
+                    closedAt: "Closed At"
+                };
+
   if (!token || !jsessionid) {
     req.flash('error', 'Please log in to view the tickets!');
     return res.redirect('/');
-    // return res.redirect('/?error=Session expired. Please login again!');
   }
 
-  try {
-    const response = await axiosInstance2.get('/api/getAllTickets', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Cookie: jsessionid
-      }
-    });
-    
-    const tickets = response.data.tickets;
-
-
-    res.render('view-tickets', {
+  res.render('view-tickets', {
       csrfToken: req.csrfToken(),
-      tickets,
       role,
-      username
+      username,
+      tickets: [],
+      headerMapping
+    });
+});
+
+
+// Data fetch for frontend
+router.get("/data", async (req, res) => {
+  try {
+    const { page, pageSize, status, creatorUsername, assigneeUsername, sortBy, ascending, createdAtStartDate, createdAtEndDate, updatedAtStartDate, updatedAtEndDate, resolvedAtStartDate, resolvedAtEndDate, closedAtStartDate, closedAtEndDate } = req.query;
+    const response = await axiosInstance2.get("/api/getAllTicketsPaginated", {
+      params: { page, pageSize, status, creatorUsername, assigneeUsername, sortBy, ascending, createdAtStartDate, createdAtEndDate, updatedAtStartDate, updatedAtEndDate, resolvedAtStartDate, resolvedAtEndDate, closedAtStartDate, closedAtEndDate }
     });
 
-
+    res.json(response.data);
   } catch (err) {
-    console.error(err.response?.data || err);
-    return res.redirect('/dashboard?error=Failed to load tickets.');
+    console.error("Error fetching paginated tickets:", err.message);
+    res.status(500).json({ error: "Failed to fetch tickets" });
   }
 });
+
+
 
 
 // View all assignable users

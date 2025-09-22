@@ -294,77 +294,79 @@ document.addEventListener('DOMContentLoaded', () => {
   // });
 
   
-  // ======== Modal Open Listener (Fix!) ========
-  document.querySelectorAll('.message-icon').forEach(icon => {
-    icon.addEventListener('click', async () => {
-      const ticketId = icon.getAttribute('data-ticket-id');
+  // ======== Modal Open Listener (with delegation) ========
+  document.addEventListener("click", async e => {
+    const icon = e.target.closest(".message-icon");
+    if (!icon) return; // not a message icon
+    e.stopPropagation();
 
-      // 🔍 Find the row that holds the ticket data
-      const row = icon.closest('tr');
-      if (!row || !row.dataset.ticket) {
-        console.error('Ticket data not found');
-        return;
+    // 🔍 Find the row that holds the ticket data
+    const row = icon.closest("tr");
+    if (!row || !row.dataset.ticket) {
+      console.error("Ticket data not found");
+      return;
+    }
+
+    const ticket = JSON.parse(decodeURIComponent(row.dataset.ticket));
+    const currentUser = window.loggedInUsername;
+
+    // 💾 Store ticket context globally
+    window.ticketContext = {
+      ticketId: ticket.ticketId,
+      creator: ticket.creatorUsername,
+      assignee: ticket.assigneeUsername,
+      status: ticket.status
+    };
+
+    // ✅ Determine permission
+    window.canSendMessage =
+      ticket.assigneeUsername && // must be assigned
+      (
+        currentUser === ticket.creatorUsername ||
+        currentUser === ticket.assigneeUsername
+      ) &&
+      (ticket.status != "Resolved" && ticket.status != "Closed");
+
+    // 💬 Show ticket ID in modal
+    window.ticketId = ticket.ticketId;
+    document.getElementById("modalTicketId").textContent = ticket.ticketId;
+
+    // 🧹 Reset chat and inputs
+    chatWindow.innerHTML =
+      `<div class="text-center text-muted py-3" id="loadingIndicator">Loading messages...</div>`;
+    attachmentPreview.innerHTML = "";
+    messageInput.value = "";
+    chatWindow.dataset.initialLoad = "true";
+    previousMessageIds = [];
+
+    // 🧠 Apply permission logic to form
+    const isAllowed = window.canSendMessage;
+    const input = document.getElementById("messageInput");
+    const attach = document.getElementById("attachmentInput");
+    const attachLabel = document.querySelector('label[for="attachmentInput"]');
+
+    [input, sendBtn, attachLabel].forEach(el => {
+      if (!isAllowed) {
+        el.classList.add("not-allowed");
+        el.title = "You cannot send a message on unassigned or closed tickets.";
+      } else {
+        el.classList.remove("not-allowed");
+        el.removeAttribute("title");
       }
-
-      const ticket = JSON.parse(decodeURIComponent(row.dataset.ticket));
-      const currentUser = window.loggedInUsername;
-
-      // 💾 Store ticket context globally
-      window.ticketContext = {
-        ticketId: ticket.ticketId,
-        creator: ticket.creatorUsername,
-        assignee: ticket.assigneeUsername,
-        status: ticket.status
-      };
-
-      // ✅ Determine permission
-      window.canSendMessage =
-        ticket.assigneeUsername && // must be assigned
-        (
-          currentUser === ticket.creatorUsername ||
-          currentUser === ticket.assigneeUsername
-        )
-        && (ticket.status != 'Resolved' && ticket.status != 'Closed');
-
-      // 💬 Show ticket ID in modal
-      window.ticketId = ticket.ticketId;
-      document.getElementById('modalTicketId').textContent = ticket.ticketId;
-
-      // 🧹 Reset chat and inputs
-      chatWindow.innerHTML = `<div class="text-center text-muted py-3" id="loadingIndicator">Loading messages...</div>`;
-      attachmentPreview.innerHTML = '';
-      messageInput.value = '';
-      chatWindow.dataset.initialLoad = 'true';
-      previousMessageIds = [];
-
-      // 🧠 Apply permission logic to form
-      const isAllowed = window.canSendMessage;
-      const input = document.getElementById('messageInput');
-      const attach = document.getElementById('attachmentInput');
-      const attachLabel = document.querySelector('label[for="attachmentInput"]');
-
-      [input, sendBtn, attachLabel].forEach(el => {
-        if (!isAllowed) {
-          el.classList.add('not-allowed');
-          el.title = 'You cannot send a message on unassigned or closed tickets.';
-        } else {
-          el.classList.remove('not-allowed');
-          el.removeAttribute('title');
-        }
-      });
-
-      input.disabled = !isAllowed;
-      sendBtn.disabled = !isAllowed;
-      attach.disabled = !isAllowed;
-
-      // 🪟 Open the modal
-      const modal = new bootstrap.Modal(document.getElementById('messageModal'));
-      modal.show();
-
-      // 📩 Fetch messages
-      await window.fetchMessages?.();
     });
+
+    input.disabled = !isAllowed;
+    sendBtn.disabled = !isAllowed;
+    attach.disabled = !isAllowed;
+
+    // 🪟 Open the modal
+    const modal = new bootstrap.Modal(document.getElementById("messageModal"));
+    modal.show();
+
+    // 📩 Fetch messages
+    await window.fetchMessages?.();
   });
+
 
 
   // ======== Auto-refresh every 5 seconds ========

@@ -258,25 +258,22 @@ function confirmAssignment() {
  * Initialize ticket modal and filters
  */
 document.addEventListener('DOMContentLoaded', () => {
-    const ticketRows = document.querySelectorAll('.ticket-row');
-    ticketRows.forEach(row => {
-        row.addEventListener('click', function (e) {
-            // if (e.target.classList.contains('message-icon')) return; // Skip if clicking message icon
-            if (e.target.closest('.message-icon-cell')) {
-                e.stopPropagation(); // Block row click behavior
-                return;
-            }
-            const ticketData = JSON.parse(decodeURIComponent(this.getAttribute('data-ticket')));
-            if (window.userRole && window.userRole.includes('ADMIN')) {
-                populateModal(ticketData);
-                const modal = new bootstrap.Modal(document.getElementById('ticketModal'));
-                modal.show();
-            } else {
-                populateUserModal(ticketData);
-                const modal = new bootstrap.Modal(document.getElementById('userTicketModal'));
-                modal.show();
-            }
-        });
+    document.addEventListener("click", function (e) {
+        const row = e.target.closest(".ticket-row");
+        if (!row) return; // not clicking a ticket row
+        if (e.target.closest(".message-icon-cell")) return; // skip message icon
+
+        const ticketData = JSON.parse(decodeURIComponent(row.getAttribute("data-ticket")));
+
+        if (window.userRole && window.userRole.includes("ADMIN")) {
+            populateModal(ticketData);
+            const modal = new bootstrap.Modal(document.getElementById("ticketModal"));
+            modal.show();
+        } else {
+            populateUserModal(ticketData);
+            const modal = new bootstrap.Modal(document.getElementById("userTicketModal"));
+            modal.show();
+        }
     });
 
     const assignTab = document.getElementById('assign-tab');
@@ -308,61 +305,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (userSearchResults) userSearchResults.innerHTML = '';
             }
         });
-    }
-
-    // Status Filter
-    document.querySelectorAll('.filter-option').forEach(option => {
-        option.addEventListener('click', function (e) {
-            e.preventDefault();
-            selectedStatusFilter = this.getAttribute('data-status');
-            document.getElementById('statusFilterButton').innerText = selectedStatusFilter;
-            applyCombinedFilter();
-        });
-    });
-
-    // Owner Filter
-    document.querySelectorAll('.owner-filter-option').forEach(option => {
-        option.addEventListener('click', function (e) {
-            e.preventDefault();
-            selectedOwnerFilter = this.getAttribute('data-owner');
-            document.getElementById('ownerFilterButton').innerText = this.innerText;
-            applyCombinedFilter();
-        });
-    });
-
-    // Show all tickets on load
-    const allTickets = document.querySelectorAll('.ticket-row');
-    allTickets.forEach(ticket => ticket.style.display = '');
-    const noTicketsMessage = document.getElementById('noTicketsMessage');
-    if (noTicketsMessage) noTicketsMessage.style.display = 'none';
+    } 
 });
-
-/**
- * Combined ticket filtering
- */
-let selectedOwnerFilter = 'All';
-let selectedStatusFilter = 'All';
-
-function applyCombinedFilter() {
-    const allTickets = document.querySelectorAll('.ticket-row');
-    let foundVisible = false;
-
-    allTickets.forEach(ticket => {
-        const ticketData = JSON.parse(decodeURIComponent(ticket.getAttribute('data-ticket')));
-        const statusCondition = (selectedStatusFilter === 'All') ||
-            ticket.classList.contains('status-' + selectedStatusFilter.replace(/\s+/g, '-').toLowerCase());
-        const ownerCondition = selectedOwnerFilter === 'All' ||
-            (selectedOwnerFilter === 'MyTickets' && ticketData.creatorUsername === window.currentUsername) ||
-            (selectedOwnerFilter === 'AssignedTickets' && ticketData.assigneeUsername === window.currentUsername);
-
-        if (statusCondition && ownerCondition) {
-            ticket.style.display = '';
-            foundVisible = true;
-        } else {
-            ticket.style.display = 'none';
-        }
-    });
-
-    const noTicketsMessage = document.getElementById('noTicketsMessage');
-    if (noTicketsMessage) noTicketsMessage.style.display = foundVisible ? 'none' : 'block';
-}

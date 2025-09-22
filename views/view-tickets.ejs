@@ -54,112 +54,98 @@
                     <li><a class="dropdown-item filter-option" href="#" data-status="Closed"><span class="status-indicator status-closed"></span> Closed</a></li>
                 </ul>
             </div>
+            
+
+            <!-- Search (center) -->
+            <div class="search-center">
+                <div class="input-group input-group-sm search-input">
+                    <span class="input-group-text bg-transparent">
+                    <i class="bi bi-search"></i>
+                    </span>
+                    <input
+                    type="text"
+                    id="searchTickets"
+                    class="form-control form-control-sm search-input-field"
+                    placeholder="Search tickets (current page)..."
+                    >
+                </div>
+            </div>
+
 
             <!-- Ownership Filter (Positioned to the right) -->
-            <div>
-                <div class="dropdown">
-                    <button class="btn custom-grey-btn dropdown-toggle" type="button" id="ownerFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Filter by Ownership
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="ownerFilterButton">
-                        <li><a class="dropdown-item owner-filter-option" href="#" data-owner="All">All Tickets</a></li>
-                        <li><a class="dropdown-item owner-filter-option" href="#" data-owner="MyTickets">My Tickets</a></li>
-                        <li><a class="dropdown-item owner-filter-option" href="#" data-owner="AssignedTickets">Assigned Tickets</a></li>
-                    </ul>
-                </div>
+            <div class="dropdown">
+                <button class="btn custom-grey-btn dropdown-toggle" type="button" id="ownerFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter by Ownership
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="ownerFilterButton">
+                    <li><a class="dropdown-item owner-filter-option" href="#" data-owner="All">All Tickets</a></li>
+                    <li><a class="dropdown-item owner-filter-option" href="#" data-owner="MyTickets">My Tickets</a></li>
+                    <li><a class="dropdown-item owner-filter-option" href="#" data-owner="AssignedTickets">Assigned Tickets</a></li>
+                </ul>
             </div>
         </div>
 
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center">
+                <label for="rowsPerPage" class="form-label mb-0 me-2">Show</label>
+                <select id="rowsPerPage" class="form-select form-select-sm rows-select me-2">
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                <span>rows</span>
+            </div>
+
+        
+            <button class="btn btn-outline-primary btn-sm rounded-3 d-flex align-items-center px-3 py-2"
+                    data-bs-toggle="modal" data-bs-target="#filterModal">
+                <i class="bi bi-sliders me-2"></i> Advanced Filter
+            </button>
+
+        </div>
+
+
         <!-- Tickets Table -->
         <div class="table-responsive">
-            <% if (tickets.length === 0) { %>
-                <p>No tickets found.</p>
-            <% } else { 
-                const headerMapping = {
-                    ticketId: "Ticket ID",
-                    title: "Title",
-                    priority: "Priority",
-                    status: "Status",
-                    createdAt: "Created At",
-                    updatedAt: "Updated At",
-                    assigneeUsername: "Assigned To",
-                    creatorUsername: "Created By",
-                    assignedByUsername: "Assigned By",
-                    description: "Description",
-                    resolvedAt: "Resolved At",
-                    closedAt: "Closed At"
-                };
-
-                // Show only the first 7 fields
-                const headers = ["ticketId", "title", "priority", "status", "creatorUsername", "assigneeUsername"];
-            %>
-                <table class="table table-bordered table-hover">
-                    <thead class="table-primary">
-                        <tr>
-                            <th style="width: 0.5px;"></th> <!-- Status indicator -->
-                            <% headers.forEach(header => { %>
-                                <th><%= headerMapping[header] %></th>
-                            <% }); %>
-                            <th style="width: 40px;"></th> <!-- Icon placeholder -->
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <% tickets.forEach(ticket => { %>
-                            <tr
-                                style="cursor: pointer; display: none;"
-                                data-ticket='<%= encodeURIComponent(JSON.stringify(ticket)) %>'
-                                class="ticket-row status-<%= ticket.status.replace(/\s+/g, '-').toLowerCase() %>"
-                            >
-                                <!-- Status Indicator -->
-                                <td class="status-indicator status-<%= ticket.status.replace(/\s+/g, '-').toLowerCase() %>"></td>
-                                <% headers.forEach(header => { 
-                                    const value = ticket[header];
-                                %>
-                                    <td>
-                                        <% if (['createdAt', 'updatedAt', 'resolvedAt', 'closedAt'].includes(header) && value !== null && !isNaN(new Date(value).getTime())) { %>
-                                            <%= new Date(value).toLocaleString() %>
-                                        <% } else { %>
-                                            <!-- <span class="text-muted"><%= value === null ? '—' : value %></span> -->
-                                             <% if (header === 'title' && value) { %>
-                                                <span class="text-muted">
-                                                    <%= value.split(' ').slice(0, 5).join(' ') %><%= value.split(' ').length > 4 ? '...' : '' %>
-                                                </span>
-                                            <% } else { %>
-                                                <span class="text-muted"><%= value === null ? '—' : value %></span>
-                                            <% } %>
-
-                                        <% } %>
-                                    </td>
-                                <% }); %>
-                                <!-- Message Icon (Hover) -->
-                                <td class="message-icon-cell">
-                                    <% if (
-                                        !(role.includes('ADMIN')) || (role.includes('ADMIN'))
-                                        <!-- (role.includes('ADMIN') && (ticket.creatorUsername === username || ticket.assigneeUsername === username)) -->
-                                    ) { %>
-                                        <span class="message-icon-wrapper">
-                                            <i class="bi bi-envelope message-icon" 
-                                            data-ticket-id="<%= ticket.ticketId %>" 
-                                            title="Open Messages" 
-                                            aria-label="Open messages for ticket <%= ticket.ticketId %>"></i>
-                                        </span>
-                                    <% } %>
-                                </td>
-                            </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-            <% } %>
+            <table class="table table-bordered table-hover" id="ticketsTable">
+                <thead class="table-primary">
+                    <tr>
+                    <th style="width: 0.5px;"></th>
+                    <% const headers = ["ticketId","title","priority","status","creatorUsername","assigneeUsername"]; %>
+                    <% headers.forEach(header => { %>
+                        <th class="sortable" data-column="<%= header %>">
+                        <%= headerMapping[header] %>
+                        <i class="bi bi-chevron-expand sort-icon"></i>
+                        </th>
+                    <% }); %>
+                    <th style="width: 40px;"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="loadingIndicator" style="display: none;" class="text-center text-muted mt-4">
+                <div class="spinner-border spinner-border-sm me-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                Loading tickets...
+            </div>
+            
             <p id="noTicketsMessage" style="display: none;" class="text-center text-muted mt-4">
                 No tickets found.
             </p>
         </div>
 
+        <!-- Pagination Controls -->
+        <nav aria-label="Ticket pagination" class="mt-3">
+            <ul id="pagination" class="pagination justify-content-center"></ul>
+        </nav>
+
+
         <%- include('footer') %>
     </div>
 
     <!-- Ticket Details Modal -->
+    <%- include('modals/filtermodal') %>
     <%- include('modals/ticketModal') %>
     <%- include('modals/reopenTicketModal') %>
     <%- include('modals/userTicketModal') %>
@@ -190,6 +176,7 @@
     <!-- Script to handle modal -->
     <script src="/js/utils.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/view-tickets.js"></script>
     <script src="/js/ticketmodal.js"></script>
     <script src="/js/userTicketModal.js"></script>
     <script src="/js/reopenticket.js"></script>
