@@ -8,6 +8,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const stream = require('stream');
 const validateToken = require('./middlewares/validateToken');
+require("../logger"); // Require the logger utility to store the logs
 
 // Show form
 router.get('/create-ticket', validateToken, (req, res) => {

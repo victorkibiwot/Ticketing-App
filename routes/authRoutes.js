@@ -3,6 +3,7 @@ const router = express.Router();
 const { axiosInstance, axiosInstance2} = require('../utils/axios');
 const qs = require('qs');
 const validateToken = require('./middlewares/validateToken');
+require("../logger"); // Require the logger utility to store the logs
 
 
 // login routes
@@ -77,7 +78,7 @@ router.get('/dashboard', validateToken, async (req, res) => {
   }
 
   try {
-    const [userRes, rolesRes, ticketsRes] = await Promise.all([
+    const [userRes, rolesRes, ticketsRes, ticketStats1] = await Promise.all([
       axiosInstance.get('/auth/getUsername', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -91,6 +92,12 @@ router.get('/dashboard', validateToken, async (req, res) => {
         }
       }),
       axiosInstance2.get('/api/getAllTickets', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Cookie: jsessionid
+        }
+      }),
+      axiosInstance2.get('/api/getTicketStatistics', {
         headers: {
           Authorization: `Bearer ${token}`,
           Cookie: jsessionid
@@ -187,16 +194,13 @@ router.get('/dashboard', validateToken, async (req, res) => {
         timeAgo: timeAgo(a.time)
       }));
 
-
-
-    // Optional summary stats
-    const myTickets = tickets.filter(t => (t.creatorUsername === username || t.assigneeUsername === username));
+  
     const ticketStats = {
-      total: myTickets.length,
-      open: myTickets.filter(t => t.status === 'Open').length,
-      inprogress: myTickets.filter(t => t.status === 'In Progress').length,
-      resolved: myTickets.filter(t => t.status === 'Resolved').length,
-      closed: myTickets.filter(t => t.status === 'Closed').length
+      total: ticketStats1.data.ticketStats.totalTickets,
+      open: ticketStats1.data.ticketStats.openTickets,
+      inprogress: ticketStats1.data.ticketStats.inProgressTickets,
+      resolved: ticketStats1.data.ticketStats.resolvedTickets,
+      closed: ticketStats1.data.ticketStats.closedTickets
     };
 
     req.session.name = name ;
