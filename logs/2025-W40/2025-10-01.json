@@ -1,0 +1,117 @@
+[
+  {
+    "timestamp": "2025-10-01T06:46:54.360Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-01T07:35:43.968Z",
+    "level": "ERROR",
+    "message": "Token validation failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T08:15:30.976Z",
+    "level": "ERROR",
+    "message": "Token validation failed: Maximum number of redirects exceeded"
+  },
+  {
+    "timestamp": "2025-10-01T08:47:44.382Z",
+    "level": "ERROR",
+    "message": "Token validation failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T09:34:55.523Z",
+    "level": "ERROR",
+    "message": "Token validation failed: Maximum number of redirects exceeded"
+  },
+  {
+    "timestamp": "2025-10-01T10:08:10.417Z",
+    "level": "ERROR",
+    "message": "Token validation failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T10:56:05.569Z",
+    "level": "ERROR",
+    "message": "Token validation failed: Maximum number of redirects exceeded"
+  },
+  {
+    "timestamp": "2025-10-01T11:24:25.470Z",
+    "level": "ERROR",
+    "message": "Token validation failed: Maximum number of redirects exceeded"
+  },
+  {
+    "timestamp": "2025-10-01T11:44:15.055Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T11:44:51.685Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T11:45:27.362Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T11:47:03.598Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T11:47:12.227Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-01T11:47:32.116Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T11:48:47.680Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-01T11:49:11.179Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T11:49:42.450Z",
+    "level": "ERROR",
+    "message": "Login failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-01T12:43:59.475Z",
+    "level": "ERROR",
+    "message": "Failed to prune sessions: Error: getaddrinfo ENOTFOUND ep-cool-rain-a9liqjp0-pooler.gwc.azure.neon.tech"
+  },
+  {
+    "timestamp": "2025-10-01T12:47:15.459Z",
+    "level": "ERROR",
+    "message": "Token validation failed: connect ETIMEDOUT 10.1.1.230:8081"
+  },
+  {
+    "timestamp": "2025-10-01T12:47:43.352Z",
+    "level": "ERROR",
+    "message": "Login failed: Error: connect ETIMEDOUT 10.1.1.230:8081"
+  },
+  {
+    "timestamp": "2025-10-01T13:08:29.558Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-01T13:10:13.912Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-01T13:10:56.651Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  }
+]

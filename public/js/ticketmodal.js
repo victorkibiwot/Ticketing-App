@@ -59,9 +59,9 @@ function populateModal(ticket) {
             : value === null ? '—' : value;
         content += `
             <div class="ticket-detail-row">
-                <div class="row">
-                    <div class="col-4 fw-bold text-start">${window.headerMapping[key] || key}:</div>
-                    <div class="col-8 fw-bold2 text-start">${displayValue}</div>
+                <div class="row align-items-center">
+                    <div class="col-5 fw-bold text-end">${window.headerMapping[key] || key}:</div>
+                    <div class="col-7 text-start">${displayValue}</div>
                 </div>
             </div>
         `;
