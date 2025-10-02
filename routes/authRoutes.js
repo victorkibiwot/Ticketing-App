@@ -24,8 +24,9 @@ router.post('/', async (req, res) => {
         }
       });
 
-  
-    const {token} = response.data;
+
+    console.log(response.data);
+    const {token, refresh_token} = response.data;
     const cookies = response.headers['set-cookie'];
     let jsessionid = null;
 
@@ -36,6 +37,7 @@ router.post('/', async (req, res) => {
       }
     }
 
+
     if (!token || !jsessionid) {
       return res.json({ success: false, message: 'Missing auth token or session cookie.' });
     }
@@ -43,6 +45,7 @@ router.post('/', async (req, res) => {
     // Store sesion in data
     req.session.token = token;
     req.session.jsessionid = jsessionid;
+    req.session.refresh_token = refresh_token;
 
     // Save session before redirect
     req.session.save(err => {

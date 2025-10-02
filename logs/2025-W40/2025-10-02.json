@@ -1,0 +1,137 @@
+[
+  {
+    "timestamp": "2025-10-02T12:51:26.404Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T12:51:35.213Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T12:53:49.348Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T12:53:56.602Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T12:53:56.611Z",
+    "level": "INFO",
+    "message": "Token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZ3VtZWlAcG9zdGJhbmsuY28ua2UiLCJleHAiOjE3NTk0MTEwNTEsImlzcyI6Imh0dHA6Ly8xMC4xLjEuMjMwOjgwODEvbG9naW4iLCJyb2xlcyI6WyJBRE1JTiJdLCJuYW1lIjoiSWFuIEFndW1lIiwidG9rZW5UeXBlIjoiYWNjZXNzIn0.pZA-FHuOMdC7VPRjDsdYlVv2CLrySMB-vYfUS32f_Yc"
+  },
+  {
+    "timestamp": "2025-10-02T12:53:56.615Z",
+    "level": "INFO",
+    "message": "Jsession:  "
+  },
+  {
+    "timestamp": "2025-10-02T12:53:56.618Z",
+    "level": "INFO",
+    "message": "Token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZ3VtZWlAcG9zdGJhbmsuY28ua2UiLCJleHAiOjE3NTk0MTEwNTEsImlzcyI6Imh0dHA6Ly8xMC4xLjEuMjMwOjgwODEvbG9naW4iLCJyb2xlcyI6WyJBRE1JTiJdLCJuYW1lIjoiSWFuIEFndW1lIiwidG9rZW5UeXBlIjoiYWNjZXNzIn0.pZA-FHuOMdC7VPRjDsdYlVv2CLrySMB-vYfUS32f_Yc"
+  },
+  {
+    "timestamp": "2025-10-02T12:53:56.621Z",
+    "level": "INFO",
+    "message": "Jsession:  "
+  },
+  {
+    "timestamp": "2025-10-02T13:46:24.908Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T13:46:32.736Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T13:46:32.745Z",
+    "level": "INFO",
+    "message": "Token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZ3VtZWlAcG9zdGJhbmsuY28ua2UiLCJleHAiOjE3NTk0MTQyMDcsImlzcyI6Imh0dHA6Ly8xMC4xLjEuMjMwOjgwODEvbG9naW4iLCJyb2xlcyI6WyJBRE1JTiJdLCJuYW1lIjoiSWFuIEFndW1lIiwidG9rZW5UeXBlIjoiYWNjZXNzIn0.gM2RP4dRJxR0Ghj4v2X2eSaH2Qs4uW1YNoOrNl-2Adk"
+  },
+  {
+    "timestamp": "2025-10-02T13:46:32.748Z",
+    "level": "INFO",
+    "message": "Jsession:  JSESSIONID=131FDC2CFF4734505C7D331D57DA9758"
+  },
+  {
+    "timestamp": "2025-10-02T14:15:42.000Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T14:16:04.144Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T14:24:49.488Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T14:40:53.682Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T14:41:13.919Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:11:45.092Z",
+    "level": "ERROR",
+    "message": "Token validation failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:11:45.136Z",
+    "level": "ERROR",
+    "message": "Token refresh failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:21:14.770Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T15:21:25.932Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:27:37.050Z",
+    "level": "INFO",
+    "message": "✅ HTTP server running at http://localhost:3000"
+  },
+  {
+    "timestamp": "2025-10-02T15:27:49.315Z",
+    "level": "INFO",
+    "message": "[object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:28:58.733Z",
+    "level": "ERROR",
+    "message": "Token validation failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:28:58.774Z",
+    "level": "INFO",
+    "message": "Access token refreshed successfully."
+  },
+  {
+    "timestamp": "2025-10-02T15:31:03.735Z",
+    "level": "ERROR",
+    "message": "Token validation failed: [object Object]"
+  },
+  {
+    "timestamp": "2025-10-02T15:31:03.769Z",
+    "level": "ERROR",
+    "message": "Token refresh failed: [object Object]"
+  }
+]
