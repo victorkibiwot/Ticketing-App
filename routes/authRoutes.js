@@ -6,10 +6,20 @@ const validateToken = require('./middlewares/validateToken');
 require("../logger"); // Require the logger utility to store the logs
 
 
-// login routes
+// login route
 router.get('/', (req, res) => {
+  // Check if session already contains valid auth data
+  const { token, jsessionid, refresh_token } = req.session;
+
+  // If session exists, skip login and go to dashboard
+  if (token && jsessionid && refresh_token) {
+    return res.redirect('/dashboard');
+  }
+
+  // Otherwise, render the login page
   res.render('login');
 });
+
 
 
 router.post('/', async (req, res) => {
