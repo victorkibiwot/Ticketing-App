@@ -314,7 +314,6 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
   const clientIp = req.ip;
-  const clientHost = req.hostname;
   const { username, password } = req.body;
 
   try{
@@ -323,8 +322,7 @@ router.post('/', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'X-Client-Ip': encrypt(clientIp),
-          'X-Client-Hostname': encrypt(clientHost)
+          'X-Client-Ip': encrypt(clientIp)
         }
       });
 
