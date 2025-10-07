@@ -1,10 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto');
 const { axiosInstance, axiosInstance2} = require('../utils/axios');
 const qs = require('qs');
 const validateToken = require('./middlewares/validateToken');
 require("../logger"); // Require the logger utility to store the logs
+const crypto = require('crypto');
+
+
+// Encryption setup (replace with your secure 32-byte key)
+const ALGORITHM = 'aes-256-gcm';
+const KEY = Buffer.from('your-32-byte-secret-key-here1234'); // 32 bytes for AES-256
+
+function encrypt(text) {
+  const iv = crypto.randomBytes(12); // 12-byte IV for AES-GCM
+  const cipher = crypto.createCipheriv(ALGORITHM, KEY, iv);
+  let encrypted = cipher.update(text, 'utf8', 'base64');
+  encrypted += cipher.final('base64');
+  const authTag = cipher.getAuthTag().toString('base64');
+  return `${encrypted}:${iv.toString('base64')}:${authTag}`;
+}
 
 
 // login route
@@ -21,42 +35,20 @@ router.get('/', (req, res) => {
   res.render('login');
 });
 
-router.use((req, res, next) => {
-  req.clientInfo = {
-    ip: req.ip,
-    hostname: req.hostname
-  };
-});
-
-// Encryption setup (replace with your secure 32-byte key)
-const ALGORITHM = 'aes-256-gcm';
-const KEY = Buffer.from('your-32-byte-secret-key-here1234'); // 32 bytes for AES-256
-
-function encrypt(text) {
-  const iv = crypto.randomBytes(12); // 12-byte IV for AES-GCM
-  const cipher = crypto.createCipheriv(ALGORITHM, KEY, iv);
-  let encrypted = cipher.update(text, 'utf8', 'base64');
-  encrypted += cipher.final('base64');
-  const authTag = cipher.getAuthTag().toString('base64');
-  return `${encrypted}:${iv.toString('base64')}:${authTag}`;
-}
 
 router.post('/', async (req, res) => {
+  const clientIp = req.ip;
+  const clientHost = req.hostname;
   const { username, password } = req.body;
-  const { ip, hostname } = req.clientInfo;
 
   try{
-    // Encrypt IP and hostname
-    const encryptedIp = encrypt(ip);
-    const encryptedHostname = encrypt(hostname);
-
     const response = await axiosInstance.post('/login', 
       qs.stringify({username, password}),
       {
         headers: {
-          'X-Client-IP': encryptedIp,
-          'X-Client-Hostname': encryptedHostname,
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Client-Ip': encrypt(clientIp),
+          'X-Client-Hostname': encrypt(clientHost)
         }
       });
 
