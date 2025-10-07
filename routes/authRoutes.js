@@ -10,7 +10,7 @@ require('dotenv').config();
 
 // Encryption setup (replace with your secure 32-byte key)
 const ALGORITHM = 'aes-256-gcm';
-const KEY = process.env.IP_KEY; // 32 bytes for AES-256
+const KEY = Buffer.from(process.env.IP_KEY); // 32 bytes for AES-256
 
 function encrypt(text) {
   const iv = crypto.randomBytes(12); // 12-byte IV for AES-GCM
