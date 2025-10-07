@@ -100,6 +100,7 @@ router.post('/', async (req, res) => {
 // Dashboard route
 router.get('/dashboard', validateToken, async (req, res) => {
   const token = req.session.token;
+  const clientIp = req.ip;
   const jsessionid = req.session.jsessionid;
 
   if (!token || !jsessionid) {
@@ -112,25 +113,33 @@ router.get('/dashboard', validateToken, async (req, res) => {
       axiosInstance.get('/auth/getUsername', {
         headers: {
           Authorization: `Bearer ${token}`,
-          Cookie: jsessionid
+          Cookie: jsessionid,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Client-Ip': encrypt(clientIp)
         }
       }),
       axiosInstance.get('/auth/getRoles', {
         headers: {
           Authorization: `Bearer ${token}`,
-          Cookie: jsessionid
+          Cookie: jsessionid,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Client-Ip': encrypt(clientIp)
         }
       }),
       axiosInstance2.get('/api/getAllTickets', {
         headers: {
           Authorization: `Bearer ${token}`,
-          Cookie: jsessionid
+          Cookie: jsessionid,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Client-Ip': encrypt(clientIp)
         }
       }),
       axiosInstance2.get('/api/getTicketStatistics', {
         headers: {
           Authorization: `Bearer ${token}`,
-          Cookie: jsessionid
+          Cookie: jsessionid,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Client-Ip': encrypt(clientIp)
         }
       })
     ]);
