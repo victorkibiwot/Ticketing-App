@@ -54,7 +54,7 @@
                 <ul>
                     <% if (activity.length > 0) { %>
                         <% activity.forEach(item => { %>
-                            <li><%= item.message %> - <em><%= item.timeAgo %></em></li>
+                            <li><%= item %></li>
                         <% }) %>
                     <% } else { %>
                         <li class="no-activity">You have no recent activity.</li>
