@@ -109,7 +109,7 @@ router.get('/dashboard', validateToken, async (req, res) => {
   }
 
   try {
-    const [userRes, rolesRes, ticketsRes, ticketStats1] = await Promise.all([
+    const [userRes, rolesRes, ticketStats1, ticketRes2] = await Promise.all([
       axiosInstance.get('/auth/getUsername', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -126,14 +126,6 @@ router.get('/dashboard', validateToken, async (req, res) => {
           'X-Client-Ip': encrypt(clientIp)
         }
       }),
-      axiosInstance2.get('/api/getAllTickets', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Cookie: jsessionid,
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-Client-Ip': encrypt(clientIp)
-        }
-      }),
       axiosInstance2.get('/api/getTicketStatistics', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -141,97 +133,21 @@ router.get('/dashboard', validateToken, async (req, res) => {
           'Content-Type': 'application/x-www-form-urlencoded',
           'X-Client-Ip': encrypt(clientIp)
         }
-      })
+      }),
+      axiosInstance2.get('/api/getRecentActivity', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Cookie: jsessionid,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Client-Ip': encrypt(clientIp)
+        }
+      }),
     ]);
 
     
     const { name, username} = userRes.data;
     const role = rolesRes.data.roles;
-    const tickets = ticketsRes.data.tickets || [];
-
-    // Extract recent activity for this user
-    // Util function: get "time ago" label
-    const timeAgo = (date) => {
-      const diffMs = Date.now() - new Date(date).getTime();
-      const diffMins = Math.floor(diffMs / (1000 * 60));
-      if (diffMins < 1) return "just now";
-      if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? "s" : ""} ago`;
-      const diffHrs = Math.floor(diffMins / 60);
-      if (diffHrs < 24) return `${diffHrs} hour${diffHrs > 1 ? "s" : ""} ago`;
-      const diffDays = Math.floor(diffHrs / 24);
-      return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-    };
-
-    const activity = [];
-    tickets.forEach(ticket => {
-      const isCreator = ticket.creatorUsername === username;
-      const isAssignee = ticket.assigneeUsername === username;
-      const isAssigner = ticket.assignedByUsername === username;
-
-      // 1. New Ticket
-      if (isCreator && ticket.createdAt) {
-        activity.push({
-          msg: `New ticket ${ticket.ticketId} created`,
-          time: ticket.createdAt
-        });
-      }
-
-      // 2. You were assigned ticket
-      if (isAssignee && ticket.updatedAt) {
-        activity.push({
-          msg: `You were assigned ticket ${ticket.ticketId}`,
-          time: ticket.assignedAt || ticket.updatedAt
-        });
-      }
-
-      // 3. You assigned a ticket
-      if (isAssigner && ticket.updatedAt) {
-        activity.push({
-          msg: `You assigned ticket ${ticket.ticketId}`,
-          time: ticket.updatedAt
-        });
-      }
-
-      // 4. Your ticket was acted upon
-      if (isCreator) {
-        if (ticket.assignedByUsername) {
-          activity.push({
-            msg: `Your ticket ${ticket.ticketId} was assigned`,
-            time: ticket.updatedAt
-          });
-        }
-        if (ticket.resolvedAt) {
-          activity.push({
-            msg: `Your ticket ${ticket.ticketId} was resolved`,
-            time: ticket.resolvedAt
-          });
-        }
-        if (ticket.closedAt) {
-          activity.push({
-            msg: `Your closed ticket ${ticket.ticketId}`,
-            time: ticket.closedAt
-          });
-        }
-      }
-
-      // 5. You resolved someone's ticket
-      if (isAssignee) {
-        if (ticket.status === 'Resolved') {
-          activity.push({
-            msg: `You resolved ticket ${ticket.ticketId}`,
-            time: ticket.resolvedAt
-          });
-        }
-      }
-    });
-
-    const recentActivity = activity
-      .sort((a, b) => new Date(b.time) - new Date(a.time))
-      .slice(0, 4)
-      .map(a => ({
-        message: a.msg,
-        timeAgo: timeAgo(a.time)
-      }));
+    const recentActivity = ticketRes2.data.activity;
 
   
     const ticketStats = {

@@ -87,45 +87,6 @@ router.post('/create-ticket', validateToken, upload.array('attachments'), async 
   }
 });
 
-
-
-// View all tickets route
-// router.get('/tickets', validateToken, async (req, res) => {
-//   const token = req.session.token;
-//   const jsessionid = req.session.jsessionid;
-//   const role = req.session.role;
-//   const username = req.session.username;
-
-//   if (!token || !jsessionid) {
-//     req.flash('error', 'Please log in to view the tickets!');
-//     return res.redirect('/');
-//   }
-
-//   try {
-//     const response = await axiosInstance2.get('/api/getAllTickets', {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         Cookie: jsessionid
-//       }
-//     });
-    
-//     const tickets = response.data.tickets;
-
-
-//     res.render('view-tickets', {
-//       csrfToken: req.csrfToken(),
-//       tickets,
-//       role,
-//       username
-//     });
-
-
-//   } catch (err) {
-//     console.error(err.response?.data || err);
-//     return res.redirect('/dashboard?error=Failed to load tickets.');
-//   }
-// });
-
 // Page shell
 router.get("/tickets", validateToken, (req, res) => {
   const token = req.session.token;
@@ -166,8 +127,14 @@ router.get("/tickets", validateToken, (req, res) => {
 // Data fetch for frontend
 router.get("/data", async (req, res) => {
   try {
+    const token = req.session.token;
+    const jsessionid = req.session.jsessionid;
     const { page, pageSize, status, creatorUsername, assigneeUsername, sortBy, ascending, createdAtStartDate, createdAtEndDate, updatedAtStartDate, updatedAtEndDate, resolvedAtStartDate, resolvedAtEndDate, closedAtStartDate, closedAtEndDate } = req.query;
     const response = await axiosInstance2.get("/api/getAllTicketsPaginated", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: jsessionid
+      },
       params: { page, pageSize, status, creatorUsername, assigneeUsername, sortBy, ascending, createdAtStartDate, createdAtEndDate, updatedAtStartDate, updatedAtEndDate, resolvedAtStartDate, resolvedAtEndDate, closedAtStartDate, closedAtEndDate }
     });
 
