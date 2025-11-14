@@ -40,22 +40,6 @@
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
                     <div class="form-group">
-                        <label for="departmentDropdownButton">Select Department</label>
-                        <div class="dropdown">
-                            <button class="btn custom-grey-btn dropdown-toggle" type="button" id="departmentDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Department
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="departmentDropdownButton">
-                                <li><a class="dropdown-item department-option" href="#" data-dept="Business and System Development">Business and System Development</a></li>
-                                <li><a class="dropdown-item department-option" href="#" data-dept="Network and Administration">Network and Administration</a></li>
-                                <li><a class="dropdown-item department-option" href="#" data-dept="Service Desk">Service Desk</a></li>
-                                <li><a class="dropdown-item department-option" href="#" data-dept="Others">Others</a></li>
-                            </ul>
-                        </div>
-                        <input type="hidden" id="departmentInput" name="department" required>
-                    </div>
-
-                    <div class="form-group">
                         <label for="title">Title</label>
                         <input type="text" id="title" name="title" placeholder="Enter ticket title" required>
                     </div>

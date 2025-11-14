@@ -214,6 +214,21 @@ function confirmAssignment() {
     const prioritySelect = document.getElementById('prioritySelect');
     const csrfToken = document.getElementById('csrfToken').value;
 
+    const department = document.getElementById('departmentInput');
+    if (!department.value) {
+        e.preventDefault();
+        Swal.fire({
+            position: 'top',
+            icon: 'warning',
+            title: 'Please select a department.',
+            showConfirmButton: false,
+            timer: 2000,
+            toast: true
+        });
+
+        return;
+    }
+
     if (!selectedAssignee) {
         Swal.fire('Error', 'Please select a valid assignee from the search results.', 'error');
         return;
@@ -226,7 +241,7 @@ function confirmAssignment() {
 
     Swal.fire({
         title: 'Are you sure?',
-        text: `Assign ticket to ${selectedAssignee} with priority ${prioritySelect.value}?`,
+        text: `Assign ticket to ${selectedAssignee} from department ${department.value} with priority ${prioritySelect.value}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -238,6 +253,7 @@ function confirmAssignment() {
             formData.append('ticketId', currentTicketId);
             formData.append('assigneeUsername', selectedAssignee);
             formData.append('priority', prioritySelect.value);
+            formData.append('department', department.value);
             formData.append('_csrf', csrfToken);
 
             const endpoint = assignFormMode === 'reassign' ? '/tickets/reassign' : '/tickets/assign';
