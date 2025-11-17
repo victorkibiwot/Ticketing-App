@@ -213,21 +213,7 @@ function renderSearchResults(users) {
 function confirmAssignment() {
     const prioritySelect = document.getElementById('prioritySelect');
     const csrfToken = document.getElementById('csrfToken').value;
-
-    const department = document.getElementById('departmentInput');
-    if (!department.value) {
-        e.preventDefault();
-        Swal.fire({
-            position: 'top',
-            icon: 'warning',
-            title: 'Please select a department.',
-            showConfirmButton: false,
-            timer: 2000,
-            toast: true
-        });
-
-        return;
-    }
+    const department = document.getElementById('departmentDropDown');
 
     if (!selectedAssignee) {
         Swal.fire('Error', 'Please select a valid assignee from the search results.', 'error');
@@ -239,9 +225,14 @@ function confirmAssignment() {
         return;
     }
 
+    if (!department.value) {
+        Swal.fire('Error', 'Please select a department.', 'error');
+        return;
+    }
+
     Swal.fire({
         title: 'Are you sure?',
-        text: `Assign ticket to ${selectedAssignee} from department ${department.value} with priority ${prioritySelect.value}?`,
+        text: `Assign ticket to ${selectedAssignee} in department ${department.value} with priority ${prioritySelect.value}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

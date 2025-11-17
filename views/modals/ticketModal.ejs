@@ -115,63 +115,24 @@
               </div>
 
               <!-- Department Dropdown -->
-              <div class="form-group">
-                <label for="departmentDropdownButton">Select Department</label>
-                <div class="dropdown">
-                  <button
-                    class="btn custom-grey-btn dropdown-toggle"
-                    type="button"
-                    id="departmentDropdownButton"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Select Department
-                  </button>
-                  <ul
-                    class="dropdown-menu"
-                    aria-labelledby="departmentDropdownButton"
-                  >
-                    <li>
-                      <a
-                        class="dropdown-item department-option"
-                        href="#"
-                        data-dept="Business and System Development"
-                        >Business and System Development</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        class="dropdown-item department-option"
-                        href="#"
-                        data-dept="Network and Administration"
-                        >Network and Administration</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        class="dropdown-item department-option"
-                        href="#"
-                        data-dept="Service Desk"
-                        >Service Desk</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        class="dropdown-item department-option"
-                        href="#"
-                        data-dept="Others"
-                        >Others</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <input
-                  type="hidden"
-                  id="departmentInput"
-                  name="department"
+
+              <div class="mb-3 col-md-6 mx-auto">
+                <label for="departmentDropDown" class="form-label"
+                  >Select Department</label
+                >
+                <select
+                  class="form-select text-center"
+                  id="departmentDropDown"
                   required
-                />
+                >
+                  <option value="" disabled selected>Select department</option>
+                  <option value="Business and System Development">Business and System Development</option>
+                  <option value="Network and Administration">Network and Administration</option>
+                  <option value="Service Desk">Service Desk</option>
+                  <option value="Others">Others</option>
+                </select>
               </div>
+              
               <!-- Centered Confirm Button -->
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary">
