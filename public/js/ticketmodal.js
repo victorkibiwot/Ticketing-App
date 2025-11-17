@@ -215,6 +215,7 @@ function confirmAssignment() {
     const csrfToken = document.getElementById('csrfToken').value;
     const departmentSelect = document.getElementById('departmentSelect');
 
+    const assignForm = document.getElementById('assignForm');
     if (!selectedAssignee) {
         Swal.fire('Error', 'Please select a valid assignee from the search results.', 'error');
         return;
@@ -249,7 +250,7 @@ function confirmAssignment() {
 
             const endpoint = assignFormMode === 'reassign' ? '/tickets/reassign' : '/tickets/assign';
             submitForm({
-                form: null,
+                form: assignForm,
                 url: endpoint,
                 loadingTitle: assignFormMode === 'reassign' ? 'Re-assigning ticket...' : 'Assigning ticket...',
                 successTitle: assignFormMode === 'reassign' ? 'Ticket re-assigned!' : 'Ticket assigned!',
