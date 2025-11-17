@@ -244,8 +244,8 @@ function confirmAssignment() {
             const formData = new FormData();
             formData.append('ticketId', currentTicketId);
             formData.append('assigneeUsername', selectedAssignee);
-            formData.append('department', departmentSelect.value);
             formData.append('priority', prioritySelect.value);
+            formData.append('department', departmentSelect.value);
             formData.append('_csrf', csrfToken);
 
             const endpoint = assignFormMode === 'reassign' ? '/tickets/reassign' : '/tickets/assign';
@@ -256,7 +256,10 @@ function confirmAssignment() {
                 successTitle: assignFormMode === 'reassign' ? 'Ticket re-assigned!' : 'Ticket assigned!',
                 errorTitle: assignFormMode === 'reassign' ? 'Re-assignment Failed' : 'Assignment Failed',
                 body: formData,
-                headers: { 'CSRF-Token': csrfToken }
+                headers: { 
+                    'CSRF-Token': csrfToken,
+                    'Content-Type': 'multipart/form-data; charset=UTF-8'
+                 }
             });
         }
     });
