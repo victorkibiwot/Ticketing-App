@@ -213,7 +213,7 @@ function renderSearchResults(users) {
 function confirmAssignment() {
     const prioritySelect = document.getElementById('prioritySelect');
     const csrfToken = document.getElementById('csrfToken').value;
-    const department = document.getElementById('departmentDropDown');
+    const departmentSelect = document.getElementById('departmentDropDown');
 
     if (!selectedAssignee) {
         Swal.fire('Error', 'Please select a valid assignee from the search results.', 'error');
@@ -225,14 +225,14 @@ function confirmAssignment() {
         return;
     }
 
-    if (!department.value) {
+    if (!departmentSelect.value) {
         Swal.fire('Error', 'Please select a department.', 'error');
         return;
     }
 
     Swal.fire({
         title: 'Are you sure?',
-        text: `Assign ticket to ${selectedAssignee} in department ${department.value} with priority ${prioritySelect.value}?`,
+        text: `Assign ticket to ${selectedAssignee} in department ${departmentSelect.value} with priority ${prioritySelect.value}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -244,7 +244,8 @@ function confirmAssignment() {
             formData.append('ticketId', currentTicketId);
             formData.append('assigneeUsername', selectedAssignee);
             formData.append('priority', prioritySelect.value);
-            formData.append('department', department.value);
+            console.log('Department: ' +  departmentSelect.value);
+            formData.append('department', departmentSelect.value);
             formData.append('_csrf', csrfToken);
 
             const endpoint = assignFormMode === 'reassign' ? '/tickets/reassign' : '/tickets/assign';
