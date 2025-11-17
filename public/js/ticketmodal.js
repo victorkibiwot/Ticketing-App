@@ -213,7 +213,7 @@ function renderSearchResults(users) {
 function confirmAssignment() {
     const prioritySelect = document.getElementById('prioritySelect');
     const csrfToken = document.getElementById('csrfToken').value;
-    const departmentSelect = document.getElementById('departmentDropDown');
+    const departmentSelect = document.getElementById('departmentSelect');
 
     if (!selectedAssignee) {
         Swal.fire('Error', 'Please select a valid assignee from the search results.', 'error');
@@ -244,7 +244,6 @@ function confirmAssignment() {
             formData.append('ticketId', currentTicketId);
             formData.append('assigneeUsername', selectedAssignee);
             formData.append('priority', prioritySelect.value);
-            console.log('Department: ' +  departmentSelect.value);
             formData.append('department', departmentSelect.value);
             formData.append('_csrf', csrfToken);
 
