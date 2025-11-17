@@ -256,10 +256,7 @@ function confirmAssignment() {
                 successTitle: assignFormMode === 'reassign' ? 'Ticket re-assigned!' : 'Ticket assigned!',
                 errorTitle: assignFormMode === 'reassign' ? 'Re-assignment Failed' : 'Assignment Failed',
                 body: formData,
-                headers: { 
-                    'CSRF-Token': csrfToken,
-                    'Content-Type': 'multipart/form-data; charset=UTF-8'
-                 }
+                headers: { 'CSRF-Token': csrfToken }
             });
         }
     });
