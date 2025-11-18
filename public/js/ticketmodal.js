@@ -245,7 +245,7 @@ function confirmAssignment() {
             formData.append('ticketId', currentTicketId);
             formData.append('assigneeUsername', selectedAssignee);
             formData.append('priority', prioritySelect.value);
-            formData.append('depName', departmentSelect.value);
+            formData.append('department', departmentSelect.value);
             formData.append('_csrf', csrfToken);
 
             const endpoint = assignFormMode === 'reassign' ? '/tickets/reassign' : '/tickets/assign';

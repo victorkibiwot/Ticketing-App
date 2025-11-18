@@ -31,7 +31,7 @@ router.get('/create-ticket', validateToken, (req, res) => {
 router.post('/create-ticket', validateToken, upload.array('attachments'), async (req, res) => {
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
-  const { title, description, department } = req.body;
+  const { title, description } = req.body;
   const files = req.files;
 
   if (!token || !jsessionid) {
@@ -47,7 +47,6 @@ router.post('/create-ticket', validateToken, upload.array('attachments'), async 
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('department', department);
 
     // If there are files, append them
     if (files && files.length > 0) {
@@ -181,13 +180,14 @@ router.get('/assignees', validateToken, async (req, res) => {
 
 // Assign Ticket Route
 router.post('/tickets/assign', validateToken, upload.none(), async (req, res) => {
-  const { ticketId, assigneeUsername, priority } = req.body;
+  const { ticketId, assigneeUsername, priority, department } = req.body;
 
   // Prepare form data
   const formDataAssign = new FormData();
   formDataAssign.append('ticketId', ticketId);
   formDataAssign.append('assigneeUsername', assigneeUsername);
   formDataAssign.append('priority', priority);
+  formDataAssign.append('department', department);
 
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
@@ -237,13 +237,14 @@ router.post('/tickets/assign', validateToken, upload.none(), async (req, res) =>
 
 // Reasign ticket route
 router.post('/tickets/reassign', validateToken, upload.none(), async (req, res) => {
-  const { ticketId, assigneeUsername, priority } = req.body;
+  const { ticketId, assigneeUsername, priority, department } = req.body;
 
   // Prepare form data
   const formDataAssign = new FormData();
   formDataAssign.append('ticketId', ticketId);
   formDataAssign.append('assigneeUsername', assigneeUsername);
   formDataAssign.append('priority', priority);
+  formDataAssign.append('department', department);
 
   const token = req.session.token;
   const jsessionid = req.session.jsessionid;
