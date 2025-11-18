@@ -793,6 +793,24 @@ html.dark-mode .pagination-sm .page-item.active .page-link {
   opacity: 0.6;
 }
 
+#prioritySelect {
+  text-align: center;
+  text-align-last: center;   /* Centers the selected option */
+}
+
+#prioritySelect option {
+  text-align: center;        /* Centers dropdown items */
+}
+
+#departmentSelect {
+  text-align: center;
+  text-align-last: center;   /* Centers the selected option */
+}
+
+#departmentSelect option {
+  text-align: center;        /* Centers dropdown items */
+}
+
 /* Search icon and separator */
 .input-group-text {
   background-color: var(--bg-content) !important;
