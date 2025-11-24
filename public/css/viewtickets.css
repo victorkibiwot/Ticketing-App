@@ -1027,4 +1027,8 @@ html.dark-mode .custom-form-input[type="date"]::-webkit-calendar-picker-indicato
 }
 
 
-
+.ticket-detail-row .col-7 {
+    white-space: normal !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}

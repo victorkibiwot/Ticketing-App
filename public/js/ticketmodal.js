@@ -61,7 +61,7 @@ function populateModal(ticket) {
             <div class="ticket-detail-row">
                 <div class="row align-items-center">
                     <div class="col-5 fw-bold text-end">${window.headerMapping[key] || key}:</div>
-                    <div class="col-7 text-start text-break">${displayValue}</div>
+                    <div class="col-7 text-start text-wrap text-break">${displayValue}</div>
                 </div>
             </div>
         `;
