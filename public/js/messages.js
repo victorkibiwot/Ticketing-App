@@ -322,8 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.canSendMessage =
       ticket.assigneeUsername && // must be assigned
       (
-        currentUser === ticket.creatorUsername ||
-        currentUser === ticket.assigneeUsername
+        currentUser.toLowerCase() === ticket.creatorUsername.toLowerCase() ||
+        currentUser.toLowerCase() === ticket.assigneeUsername.toLowerCase()
       ) &&
       (ticket.status != "Resolved" && ticket.status != "Closed");
 

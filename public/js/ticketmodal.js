@@ -4,6 +4,8 @@ let allUsers = [];
 let selectedAssignee = null;
 let currentTicketId = null;
 let currentTicketCreator = null;
+let currentTicketAssignee = null;
+let currentLoggedInUser = null;
 let assignFormMode = null;
 
 /**
@@ -70,21 +72,31 @@ function populateModal(ticket) {
     if (modalBody) modalBody.innerHTML = content;
 
     currentTicketId = ticket.ticketId;
-    currentTicketCreator = ticket.creatorUsername;
+    currentTicketCreator = ticket.creatorUsername.toLowerCase();
+    currentTicketAssignee = null == ticket.assigneeUsername ? '' : ticket.assigneeUsername.toLowerCase();
+    currentLoggedInUser = window.currentUsername.toLowerCase();
+
 
     const ticketStatus = ticket.status ? ticket.status.toLowerCase() : '';
     let actionButtons = '';
 
-    if (ticketStatus !== 'closed') {
-        if (window.currentUsername === currentTicketCreator) {
-            actionButtons += `<button class="btn btn-danger m-2" onclick="closeTicket('${currentTicketId}', document.getElementById('csrfToken').value)">Close Ticket</button>`;
-        }
-        if (window.currentUsername === ticket.assigneeUsername && ticketStatus !== 'resolved') {
+    if(ticketStatus === 'closed'){
+        actionButtons += `<button class="btn btn-success m-2" onclick="reopenTicket()">Re-Open Ticket</button>`;
+    }
+
+    if(ticketStatus === 'open'){
+        actionButtons += `<button class="btn btn-danger m-2" onclick="closeTicket('${currentTicketId}', document.getElementById('csrfToken').value)">Close Ticket</button>`;
+    }
+
+    if(ticketStatus === 'in progress'){
+        if(currentTicketAssignee === currentLoggedInUser){
             actionButtons += `<button class="btn btn-success m-2" onclick="markAsResolved('${currentTicketId}', document.getElementById('csrfToken').value)">Mark as Resolved</button>`;
         }
-        if (ticketStatus === 'resolved' && window.currentUsername === currentTicketCreator) {
-            actionButtons += `<button class="btn btn-success m-2" onclick="reopenTicket()">Re-Open Ticket</button>`;
-        }
+        actionButtons += `<button class="btn btn-danger m-2" onclick="closeTicket('${currentTicketId}', document.getElementById('csrfToken').value)">Close Ticket</button>`;
+    }
+
+    if(ticketStatus === 'resolved'){
+        actionButtons += `<button class="btn btn-danger m-2" onclick="closeTicket('${currentTicketId}', document.getElementById('csrfToken').value)">Close Ticket</button>`;
     }
 
     if (actionButtons && modalBody) {

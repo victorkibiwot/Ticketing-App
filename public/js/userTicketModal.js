@@ -23,35 +23,41 @@ function populateUserModal(ticket) {
     const modalBody = document.getElementById('userModalBodyContent');
     if (modalBody) modalBody.innerHTML = content;
 
-    const actionButton = document.getElementById('ticketActionBtn');
+    const resolveButton = document.getElementById('resolveTicketBtn');
+    const closeButton = document.getElementById('closeTicketBtn');
     const reopenButton = document.getElementById('reopenTicketBtn');
-    if (actionButton && reopenButton) {
-        actionButton.style.display = 'none';
-        reopenButton.style.display = 'none';
+    if (resolveButton && reopenButton && closeButton) {
 
         const ticketStatus = ticket.status ? ticket.status.toLowerCase() : '';
-        if (ticketStatus !== 'closed') {
-            if (ticket.creatorUsername === window.loggedInUsername) {
-                actionButton.style.display = 'block';
-                actionButton.innerText = 'Close Ticket';
-                actionButton.classList.remove('btn-success');
-                actionButton.classList.add('btn-danger');
-                actionButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
+        const ticketAssignee = ticket.ticketAssignee ? ticket.ticketAssignee.toLowerCase() : '';
+        const currentUser = window.currentUsername ? window.currentUsername.toLowerCase() : '';
 
-                if (ticketStatus === 'resolved') {
-                    reopenButton.style.display = 'block';
-                    reopenButton.innerText = 'Re-Open Ticket';
-                    reopenButton.classList.remove('btn-danger');
-                    reopenButton.classList.add('btn-success');
-                    reopenButton.onclick = () => reopenTicket();
-                }
-            } else if (ticket.assigneeUsername === window.loggedInUsername && ticketStatus !== 'resolved') {
-                actionButton.style.display = 'block';
-                actionButton.innerText = 'Mark as Resolved';
-                actionButton.classList.remove('btn-danger');
-                actionButton.classList.add('btn-success');
-                actionButton.onclick = () => markAsResolved(currentTicketId, document.getElementById('csrfToken').value);
+        if(ticketStatus === 'open'){
+            closeButton.style.display = 'block';
+            closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
+            return;
+        }
+
+        if(ticketStatus === 'in progress'){
+            if(ticketAssignee === currentUser){
+                resolveButton.style.display = 'block';
+                resolveButton.onclick = () => markAsResolved(currentTicketId, document.getElementById('csrfToken').value);
             }
+            closeButton.style.display = 'block';
+            closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
+            return;
+        }
+
+        if(ticketStatus === 'resolved'){
+            closeButton.style.display = 'block';
+            closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
+            return;
+        }
+
+        if(ticketStatus === 'closed'){
+            reopenButton.style.display = 'block';
+            reopenButton.onclick = () => reopenTicket();
+            return;
         }
     }
 }
