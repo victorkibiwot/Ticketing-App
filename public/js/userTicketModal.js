@@ -29,13 +29,12 @@ function populateUserModal(ticket) {
     if (resolveButton && reopenButton && closeButton) {
 
         const ticketStatus = ticket.status ? ticket.status.toLowerCase() : '';
-        const ticketAssignee = ticket.ticketAssignee ? ticket.ticketAssignee.toLowerCase() : '';
+        const ticketAssignee = ticket.assigneeUsername ? ticket.assigneeUsername.toLowerCase() : '';
         const currentUser = window.currentUsername ? window.currentUsername.toLowerCase() : '';
 
         if(ticketStatus === 'open'){
             closeButton.style.display = 'block';
             closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
-            return;
         }
 
         if(ticketStatus === 'in progress'){
@@ -45,19 +44,16 @@ function populateUserModal(ticket) {
             }
             closeButton.style.display = 'block';
             closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
-            return;
         }
 
         if(ticketStatus === 'resolved'){
             closeButton.style.display = 'block';
             closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
-            return;
         }
 
         if(ticketStatus === 'closed'){
             reopenButton.style.display = 'block';
             reopenButton.onclick = () => reopenTicket();
-            return;
         }
     }
 }
