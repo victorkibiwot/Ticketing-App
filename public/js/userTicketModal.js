@@ -42,8 +42,6 @@ function populateUserModal(ticket) {
                 resolveButton.style.display = 'block';
                 resolveButton.onclick = () => markAsResolved(currentTicketId, document.getElementById('csrfToken').value);
             }
-            closeButton.style.display = 'block';
-            closeButton.onclick = () => closeTicket(currentTicketId, document.getElementById('csrfToken').value);
         }
 
         if(ticketStatus === 'resolved'){
